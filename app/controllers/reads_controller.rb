@@ -6,7 +6,7 @@ class ReadsController < ApplicationController
     end
 
     def show
-     render json: @read
+        render json: @read
     end
 
     def create
