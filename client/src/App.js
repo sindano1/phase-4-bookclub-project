@@ -1,23 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
+import { Routes, Route, Link } from "react-router-dom";
+import Home from './Components/Home/Home';
+import MyLibrary from './Components/MyLibrary/MyLibrary';
+import CurrentBooks from './Components/CurrentBooks/CurrentBooks';
+import PastBooks from './Components/PastBooks/PastBooks';
+import BookClub from './Components/BookClub/BookClub';
+import NavBar from './Components/NavBar/NavBar';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home />}/>
+        <Route path="mylibrary" element={<MyLibrary />}>
+            <Route path="current-books" element={<CurrentBooks/>}/>
+            <Route path="past-books" element={<PastBooks/>}/>
+        </Route>
+        <Route path="book-clubs" element={<BookClub />}/>
+      </Routes>
     </div>
   );
 }
