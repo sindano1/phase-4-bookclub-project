@@ -40,7 +40,7 @@ function Home() {
 
     useEffect(()=>{
         //Make a fetch call to the OpenLibrary API
-        fetch("http://openlibrary.org/search.json?q=the+lord+of+the+rings+tolkien")
+        fetch("http://openlibrary.org/search.json?q=the+lor")
         .then(res => res.json())
         .then(receivedData => console.log("Received Data", receivedData));
     },[])
