@@ -1,0 +1,15 @@
+.content-list{
+    width: 100%;
+    min-height: 350px;
+    border: black 1px solid;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.content-list > header{
+    text-align: center;
+}
+
+.empty-array-msg{
+    font-style : italic;
+}

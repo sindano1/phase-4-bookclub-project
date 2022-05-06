@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Home.css"
 import DashboardContainer from "../DashboardContainer/DashboardContainer";
 import Container from "react-bootstrap/Container";
@@ -27,16 +27,24 @@ function Home() {
     //NavCard Content
 
     //Reading List
-    const readingListHeader = (<h1>Reading List</h1>)
-    const readingListBody = (<p>Search for books and see your reading activity.</p>)
-    const readingListButton = "My Reading List"
-    const readingListLink = "reading-list"
+    const readingListHeader = (<h1>My Library</h1>)
+    const readingListBody = (<p>See your current and past books and reviews. Add new books. W</p>)
+    const readingListButton = "Go to Your Library"
+    const readingListLink = "mylibrary"
 
     //Book Clubs
     const bookClubHeader = (<h1>Book Clubs</h1>)
     const bookClubBody = (<p>View, find and join book clubs.</p>)
     const bookClubButton = "My Book Clubs"
-    const bookClubLink = "book-club"
+    const bookClubLink = "book-clubs"
+
+    useEffect(()=>{
+        //Make a fetch call to the OpenLibrary API
+        fetch("http://openlibrary.org/search.json?q=the+lord+of+the+rings+tolkien")
+        .then(res => res.json())
+        .then(receivedData => console.log("Received Data", receivedData));
+    },[])
+    
 
     return(
         <>
