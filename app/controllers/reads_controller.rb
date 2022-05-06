@@ -35,11 +35,5 @@ private
         params.permit(:user_id, :book_id, :has_been_read, :is_favorite, :review)
     end
 
-    # return book instance:
-    # book = self.book_id
-    # Book.find_by(id: book_id)
 
-    # return user instance
-    # user = self.user_id
-    # User.find_by(id: user_id)
 end
