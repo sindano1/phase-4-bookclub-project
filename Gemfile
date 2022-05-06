@@ -42,6 +42,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'faker'
 
+gem 'openlibrary'
+
 
 group :development, :test do
   gem 'rspec-rails', '~> 5.0.0'
