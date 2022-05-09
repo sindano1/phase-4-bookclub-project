@@ -23,6 +23,7 @@ function Home() {
                             </Col>
                         </Row>
                        </Container>)
+    const dashboardId = "home-dash"
 
     //NavCard Content
 
@@ -48,22 +49,26 @@ function Home() {
 
     return(
         <>
-        <DashboardContainer header={dashHeader} body={dashBody}/>
+        <DashboardContainer header={dashHeader} body={dashBody} id={dashboardId}/>
         <Container>
             <Row>
                 <Col sm={12} md={6}>
                     <NavCard id="my-reading-list" 
+                             className="nav-card"
                              header={readingListHeader}
                              body={readingListBody}
                              navButton={readingListButton}
-                             navLink={readingListLink}/>
+                             navLink={readingListLink}
+                             />
                 </Col>
                 <Col sm={12} md={6}>
-                    <NavCard id="my-book-clubs" 
+                    <NavCard id="my-book-clubs"
+                             className="nav-card"
                              header={bookClubHeader}
                              body={bookClubBody}
                              navButton={bookClubButton}
-                             navLink={bookClubLink}/>
+                             navLink={bookClubLink}
+                             />
                 </Col>
             </Row>
         </Container>

@@ -1,0 +1,13 @@
+footer{
+    background-color: #C3DBD9;
+    padding: 20px;
+    border-top: 2px black solid;
+}
+footer ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+}
+footer h4 {
+    text-align: left;
+}

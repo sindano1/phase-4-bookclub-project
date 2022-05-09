@@ -7,6 +7,7 @@ import CurrentBooks from './Components/CurrentBooks/CurrentBooks';
 import PastBooks from './Components/PastBooks/PastBooks';
 import BookClub from './Components/BookClub/BookClub';
 import NavBar from './Components/NavBar/NavBar';
+import Footer from './Components/Footer/Footer';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         </Route>
         <Route path="book-clubs" element={<BookClub />}/>
       </Routes>
+      <Footer/>
     </div>
   );
 }

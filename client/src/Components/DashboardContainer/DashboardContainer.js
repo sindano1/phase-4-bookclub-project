@@ -1,9 +1,9 @@
 import React from "react";
 import "./DashboardContainer.css"
 
-function DashboardContainer({header, body}){
+function DashboardContainer({header, body, id}){
     return(
-        <article className="jumbotron">
+        <article className="jumbotron" id={id}>
             <header>
                 {header}
             </header>
