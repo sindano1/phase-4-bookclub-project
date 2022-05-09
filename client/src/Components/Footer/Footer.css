@@ -1,0 +1,12 @@
+footer{
+    background-color: #C3DBD9;
+    padding: 20px;
+}
+footer ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+}
+footer h4 {
+    text-align: left;
+}
