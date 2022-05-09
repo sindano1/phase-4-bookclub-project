@@ -9,11 +9,11 @@ function NavBar(){
     return(
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href="#home">Book Club App</Navbar.Brand>
+                <Navbar.Brand href="/">Book Club App</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link href="/home">Home</Nav.Link>
                     <Nav.Link href="mylibrary">Library</Nav.Link>
                     <Nav.Link href="book-clubs">Book Clubs</Nav.Link>
                     <Nav.Link href="/">About</Nav.Link>
