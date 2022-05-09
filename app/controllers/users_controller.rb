@@ -7,19 +7,7 @@ class UsersController < ApplicationController
     end
 
     def show
-        if params[:id]
             render json: @user
-        end
-        
-        # TODO: why can I not enter byebug from /auth
-        # TODO: why am I getting "user not found" error when user is logged in
-        # byebug
-        # current_user = User.find(session[:user_id])
-        # if current_user
-        #     render json: current_user
-        # else
-        #     render json: { error: "No user logged in" }, status: :unauthorized
-        # end
     end
 
     def create
