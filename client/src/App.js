@@ -6,6 +6,7 @@ import MyLibrary from './Components/MyLibrary/MyLibrary';
 import CurrentBooks from './Components/CurrentBooks/CurrentBooks';
 import PastBooks from './Components/PastBooks/PastBooks';
 import BookClub from './Components/BookClub/BookClub';
+import Login from './Components/Login/Login';
 import NavBar from './Components/NavBar/NavBar';
 import Footer from './Components/Footer/Footer';
 
@@ -15,6 +16,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />}/>
+        <Route path="login" element={<Login />}/>
         <Route path="mylibrary" element={<MyLibrary />}>
             <Route path="current-books" element={<CurrentBooks/>}/>
             <Route path="past-books" element={<PastBooks/>}/>
