@@ -8,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import ResultsCard from '../ResultsCard/ResultsCard';
 
 function MyLibrary(){
     const [newBookFormState, setNewBookFormState] = useState("");
@@ -131,7 +132,8 @@ function MyLibrary(){
             </Modal.Header>
 
             <Modal.Body>
-                {searchData.length === 0 ? <p>Loading...</p> : <p>{searchData.docs[0].author_name}</p>}
+                <ResultsCard searchData = {searchData} />
+               
             </Modal.Body>
 
             <Modal.Footer>
