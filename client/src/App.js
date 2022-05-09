@@ -6,6 +6,7 @@ import MyLibrary from './Components/MyLibrary/MyLibrary';
 import CurrentBooks from './Components/CurrentBooks/CurrentBooks';
 import PastBooks from './Components/PastBooks/PastBooks';
 import BookClub from './Components/BookClub/BookClub';
+import Landing from './Components/Landing/Landing';
 import Login from './Components/Login/Login';
 import NavBar from './Components/NavBar/NavBar';
 import Footer from './Components/Footer/Footer';
@@ -15,8 +16,9 @@ function App() {
     <div className="App">
       <NavBar />
       <Routes>
-        <Route path="/" element={<Home />}/>
+        <Route path="/" element={<Landing />}/>
         <Route path="login" element={<Login />}/>
+        <Route path="/home" element={<Home />}/>
         <Route path="mylibrary" element={<MyLibrary />}>
             <Route path="current-books" element={<CurrentBooks/>}/>
             <Route path="past-books" element={<PastBooks/>}/>
