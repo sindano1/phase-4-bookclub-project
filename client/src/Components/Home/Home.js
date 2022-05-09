@@ -23,6 +23,7 @@ function Home() {
                             </Col>
                         </Row>
                        </Container>)
+    const dashboardId = "home-dash"
 
     //NavCard Content
 
@@ -48,7 +49,7 @@ function Home() {
 
     return(
         <>
-        <DashboardContainer header={dashHeader} body={dashBody}/>
+        <DashboardContainer header={dashHeader} body={dashBody} id={dashboardId}/>
         <Container>
             <Row>
                 <Col sm={12} md={6}>

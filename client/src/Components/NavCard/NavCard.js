@@ -12,11 +12,11 @@ function NavCard({header, body, navButton, navLink, id}){
             <section className="nav-card-header">
                 {body}
             </section>
-            <nav>
-                <Button href={navLink}>
-                    {navButton}
-                </Button>
-            </nav>
+            
+            <Button href={navLink}>
+                {navButton}
+            </Button>
+            
         </article>
     )
 }
