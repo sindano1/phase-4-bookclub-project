@@ -14,17 +14,20 @@ function MyLibrary(){
     const [showModal, setShowModal] = useState(false);
     const [searchData, setSearchData] = useState([]);
 
+    //Jumbotron Content
     const dashHeader = <h1>Library</h1>
     const dashBody = (
         <>
             <h2>Track your books. Find new adventures. Leave reviews.</h2>
             {/* Add another page for manual book entry that does not use the API and allows a user to input title, author and an image. */}
             <Form onSubmit={handleNewBookSubmission}>
-                <Form.Label>Add books to your reading list. Can't find your book? Add one manually <Link to="/">here</Link>.</Form.Label>
+                <Form.Label>Search for books to add to your reading list. Can't find your book? Add one manually <Link to="/">here</Link>.</Form.Label>
                 <Form.Control type="text" name="booksearch" value={newBookFormState} onChange={handleFormChange} placeholder="Search for a book title, author or genre"></Form.Control>
             </Form>
         </>
     )
+    const dashboardId = "my-library-jumbo"
+
     //This is a function that handles change in user input text
     function handleFormChange(e){
         setNewBookFormState(e.target.value)
@@ -67,7 +70,7 @@ function MyLibrary(){
     
     return(
         <>
-        <DashboardContainer header={dashHeader} body={dashBody}/>
+        <DashboardContainer header={dashHeader} body={dashBody} id={dashboardId} />
         {/* When a user searches for a book, they should see a dropdown menu with a list of books. Each div in the dropdown should have a button that says "add book".
         Clicking on the book will add it to the "Reading List" */}
         <Container>
@@ -75,7 +78,7 @@ function MyLibrary(){
                 <Col sm={12} md={8}>
                     <section className="content-list">
                         <header>
-                            <h3>My Reading List</h3>
+                            <h3><strong>My Reading List</strong></h3>
                         </header>
                         <hr/>
                         <section>
@@ -97,9 +100,9 @@ function MyLibrary(){
                     </section>
                 </Col>
                 <Col sm={12} md={4}>
-                    <section className="content-list">
+                    <section className="content-list border" id="past-book-reviews">
                         <header>
-                            <h3>Past Books and Reviews</h3>
+                            <h3><strong>Past Books and Reviews</strong></h3>
                             {/* Build a new page for this. Currently linking to home */}
                             <Link to="/">See All</Link>
                         </header>

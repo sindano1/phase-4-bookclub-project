@@ -1,10 +1,11 @@
-article {
+.nav-card {
     border: black 1px solid;
     min-height: 200px;
     border-radius: 5px;
     margin: 20px;
     padding: 20px;
 }
+
 article header.nav-card-header{
     text-align: center;
 }

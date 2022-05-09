@@ -1,9 +1,11 @@
 .content-list{
     width: 100%;
     min-height: 350px;
+    padding: 20px;
+}
+.border{
     border: black 1px solid;
     border-radius: 5px;
-    padding: 20px;
 }
 
 .content-list > header{
@@ -12,4 +14,18 @@
 
 .empty-array-msg{
     font-style : italic;
+}
+
+#my-library-jumbo{
+    background-color: #1A132F;
+    color: white;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+#past-book-reviews{
+    background-color: #5B7DB1;
+    color: white;
+}
+#root{
+    background-color: #EFEFEF
 }
