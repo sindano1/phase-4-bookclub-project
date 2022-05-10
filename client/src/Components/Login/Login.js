@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../UserContext/UserContext";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import Form from 'react-bootstrap/Form';
@@ -8,6 +9,9 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 function Login(){
+    //Fetch the user states from UserContext
+    const { user, setUser } = useContext(UserContext);
+
     //Two states for each form.
     const [loginFormState, setLoginFormState] = useState({
         username: "",
@@ -42,9 +46,9 @@ function Login(){
         }
         fetch("http://localhost:3000/login", configObj)
         .then(res => {
-            console.log(res)
             if (res.ok){
-                //Save basic user information in a context?
+                res.json()
+                .then(data => setUser(data) );
                 navigate('/home')
             }else{
                 navigate('/')

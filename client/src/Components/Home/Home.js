@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../UserContext/UserContext";
 import "./Home.css"
 import DashboardContainer from "../DashboardContainer/DashboardContainer";
 import Container from "react-bootstrap/Container";
@@ -8,8 +9,9 @@ import NavCard from "../NavCard/NavCard";
 
 //A Component that represents the first page that a user lands on after logging in
 function Home() {
+    const { user, setUser } = useContext(UserContext);
     //Dashboard Content
-    const dashHeader = <h1>Welcome [user]!</h1>
+    const dashHeader = <h1>Welcome {user.first_name}!</h1>
     const dashBody = (<Container>
                         <Row>
                             <Col sm={6} md={4}>
@@ -39,12 +41,12 @@ function Home() {
     const bookClubButton = "My Book Clubs"
     const bookClubLink = "book-clubs"
 
-    useEffect(()=>{
-        //Make a fetch call to the OpenLibrary API
-        fetch("http://openlibrary.org/search.json?q=the+lor")
-        .then(res => res.json())
-        .then(receivedData => console.log("Received Data", receivedData));
-    },[])
+    // useEffect(()=>{
+    //     //Make a fetch call to the OpenLibrary API
+    //     fetch("http://openlibrary.org/search.json?q=the+lor")
+    //     .then(res => res.json())
+    //     .then(receivedData => console.log("Received Data", receivedData));
+    // },[])
     
 
     return(
