@@ -10,7 +10,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import ResultsCard from '../ResultsCard/ResultsCard';
 
-function MyLibrary(){
+function MyLibrary() {
     const [newBookFormState, setNewBookFormState] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [searchData, setSearchData] = useState([]);
@@ -30,11 +30,11 @@ function MyLibrary(){
     const dashboardId = "my-library-jumbo"
 
     //This is a function that handles change in user input text
-    function handleFormChange(e){
+    function handleFormChange(e) {
         setNewBookFormState(e.target.value)
     }
     //This is a function that handles showing/hiding the search results modal
-    function handleClose(){
+    function handleClose() {
         setShowModal(false);
     }
     //This is a function that handles when the user submits their search query
@@ -57,101 +57,89 @@ function MyLibrary(){
             // Maybe add some error handling here
             .then(res => res.json())
             .then(searchData => {
-                console.log(searchData
-                    .docs
-                    .slice(0, 10)
-                    .map(book => {
-                        const title = book.title
-                        const author = book.author_name
-                        const isbn = book.isbn[0]
-                        console.log(`${title} ${author} ${isbn}`)
-                    })
-                    // .slice(0, 10)
-                )
-                // .map fuction above is returning an array of undefined in addtion to our results
                 setShowModal(true);
                 setSearchData(searchData);
-            }
-            );
-    }
+            })
+    };
+
+
     // At some point we will map over a user's unread books, read books and reviews
     const mappedUnreadBooks = [];
     const mappedCurrentlyReadingBOoks = [];
     const mappedReadBooks = [];
     const mappedReviews = [];
-    
-    return(
+
+    return (
         <>
-        <DashboardContainer header={dashHeader} body={dashBody} id={dashboardId} />
-        {/* When a user searches for a book, they should see a dropdown menu with a list of books. Each div in the dropdown should have a button that says "add book".
+            <DashboardContainer header={dashHeader} body={dashBody} id={dashboardId} />
+            {/* When a user searches for a book, they should see a dropdown menu with a list of books. Each div in the dropdown should have a button that says "add book".
         Clicking on the book will add it to the "Reading List" */}
-        <Container>
-            <Row>
-                <Col sm={12} md={8}>
-                    <section className="content-list">
-                        <header>
-                            <h3><strong>My Reading List</strong></h3>
-                        </header>
-                        <hr/>
-                        <section>
+            <Container>
+                <Row>
+                    <Col sm={12} md={8}>
+                        <section className="content-list">
+                            <header>
+                                <h3><strong>My Reading List</strong></h3>
+                            </header>
+                            <hr />
+                            <section>
+                                <section>
+                                    <header>
+                                        <h4>Currently Reading</h4>
+                                    </header>
+                                    {mappedCurrentlyReadingBOoks.length === 0 ? <p className="empty-array=msg">You are not currently reading any books.</p> : <ol>{mappedCurrentlyReadingBOoks}</ol>}
+                                </section>
+                                <hr />
+                                <header>
+                                    <h4>On Deck</h4>
+                                </header>
+                                <section>
+                                    {mappedUnreadBooks.length === 0 ? <p className="empty-array-msg">You have no books in your reading list.</p> : <ol>{mappedUnreadBooks}</ol>}
+                                </section>
+                            </section>
+
+                        </section>
+                    </Col>
+                    <Col sm={12} md={4}>
+                        <section className="content-list border" id="past-book-reviews">
+                            <header>
+                                <h3><strong>Past Books and Reviews</strong></h3>
+                                {/* Build a new page for this. Currently linking to home */}
+                                <Link to="/">See All</Link>
+                            </header>
+                            <hr />
                             <section>
                                 <header>
-                                    <h4>Currently Reading</h4>
+                                    <h4>Recently Read</h4>
                                 </header>
-                                {mappedCurrentlyReadingBOoks.length === 0 ? <p className="empty-array=msg">You are not currently reading any books.</p> : <ol>{mappedCurrentlyReadingBOoks}</ol>}
+                                <hr />
+                                {mappedReadBooks.length === 0 ? <p className="empty-array-msg">You haven't read any books.</p> : <ol>{mappedReadBooks}</ol>}
                             </section>
-                            <hr/>
-                            <header>
-                                <h4>On Deck</h4>
-                            </header>
                             <section>
-                                {mappedUnreadBooks.length === 0 ? <p className="empty-array-msg">You have no books in your reading list.</p> : <ol>{mappedUnreadBooks}</ol>}
+                                <header>
+                                    <h4>Recent Reviews</h4>
+                                </header>
+                                <hr />
+                                {mappedReviews.length === 0 ? <p className="empty-array-msg">You haven't written any reviews.</p> : <ol>{mappedReviews}</ol>}
                             </section>
                         </section>
-                        
-                    </section>
-                </Col>
-                <Col sm={12} md={4}>
-                    <section className="content-list border" id="past-book-reviews">
-                        <header>
-                            <h3><strong>Past Books and Reviews</strong></h3>
-                            {/* Build a new page for this. Currently linking to home */}
-                            <Link to="/">See All</Link>
-                        </header>
-                        <hr/>
-                        <section>
-                            <header>
-                                <h4>Recently Read</h4>
-                            </header>
-                            <hr/>
-                            {mappedReadBooks.length === 0 ? <p className="empty-array-msg">You haven't read any books.</p> : <ol>{mappedReadBooks}</ol>}
-                        </section>
-                        <section>
-                            <header>
-                                <h4>Recent Reviews</h4>
-                            </header>
-                            <hr/>
-                            {mappedReviews.length === 0 ? <p className="empty-array-msg">You haven't written any reviews.</p> : <ol>{mappedReviews}</ol>}
-                        </section>
-                    </section>
-                </Col>
-            </Row>
-        </Container>
-        <Modal show={showModal} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Modal title</Modal.Title>
-            </Modal.Header>
+                    </Col>
+                </Row>
+            </Container>
+            <Modal show={showModal} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal title</Modal.Title>
+                </Modal.Header>
 
-            <Modal.Body>
-                <ResultsCard searchData = {searchData} />
-               
-            </Modal.Body>
+                <Modal.Body>
+                    <ResultsCard searchData={searchData} />
+                </Modal.Body>
 
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>Close</Button>
-                <Button variant="primary" onClick={handleClose}>Save changes</Button>
-            </Modal.Footer>
-        </Modal>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                    <Button variant="primary" onClick={handleClose}>Save changes</Button>
+                </Modal.Footer>
+            </Modal>
 
         </>
     )
