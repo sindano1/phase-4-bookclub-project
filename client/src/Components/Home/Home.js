@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { UserContext } from "../UserContext/UserContext";
 import "./Home.css"
+import Login from "../Login/Login";
 import DashboardContainer from "../DashboardContainer/DashboardContainer";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
@@ -41,14 +42,20 @@ function Home() {
     const bookClubButton = "My Book Clubs"
     const bookClubLink = "book-clubs"
 
-    // useEffect(()=>{
-    //     //Make a fetch call to the OpenLibrary API
-    //     fetch("http://openlibrary.org/search.json?q=the+lor")
-    //     .then(res => res.json())
-    //     .then(receivedData => console.log("Received Data", receivedData));
-    // },[])
+    useEffect(()=>{
+        fetch("/auth")
+        .then(res => {
+            if(res.ok){
+                res.json().then(user => setUser(user))
+            }else{
+                console.log("nope")
+            }
+        })
+    },[setUser])
     
-
+    if (!user){
+        return <Login/>
+    }
     return(
         <>
         <DashboardContainer header={dashHeader} body={dashBody} id={dashboardId}/>

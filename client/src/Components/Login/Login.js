@@ -36,6 +36,7 @@ function Login(){
     //TO DO: Make a fetch request to start a new user session.
     function handleLoginSubmit(e){
         e.preventDefault();
+
         const configObj ={
             method: "POST",
             headers: {
@@ -44,20 +45,18 @@ function Login(){
             },
             body: JSON.stringify(loginFormState)
         }
-        fetch("http://localhost:3000/login", configObj)
+
+        fetch("/login", configObj)
         .then(res => {
             if (res.ok){
-                res.json()
-                .then(data => setUser(data) );
-                navigate('/home')
+                res.json().then((data)=> {
+                    setUser(data);
+                    navigate('/home');
+                })
             }else{
                 navigate('/')
             }
         })
-        // .then((user) => {
-        //     console.log(user)
-        //     navigate("/home")
-        // });
     }
     //A function that handles creating a new account
     //TO DO: Make  a fetch request to post a new user and start a new session (aka log them in.)

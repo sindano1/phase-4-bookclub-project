@@ -5,11 +5,11 @@ class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
   rescue_from ActiveRecord::RecordInvalid,with: :render_invalid
 
+  private
+
   def authorize
     return render json: {error: "Not authorized"}, status: :unauthorized unless session.include? :user_id
   end
-
-  private
 
   def render_not_found
    render json:{
