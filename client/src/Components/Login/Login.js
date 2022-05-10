@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../UserContext/UserContext";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/Button";
@@ -7,6 +9,9 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 function Login(){
+    //Fetch the user states from UserContext
+    const { user, setUser } = useContext(UserContext);
+
     //Two states for each form.
     const [loginFormState, setLoginFormState] = useState({
         username: "",
@@ -25,10 +30,33 @@ function Login(){
     const {username, password} = loginFormState;
     const {first_name, last_name, birthday, new_username, new_password, verify_password} = newAccountFormState;
 
+    //Use Navigate
+    const navigate = useNavigate();
     //A function that handles logging in
     //TO DO: Make a fetch request to start a new user session.
     function handleLoginSubmit(e){
         e.preventDefault();
+
+        const configObj ={
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json",
+                "Accepts" : "application/json"
+            },
+            body: JSON.stringify(loginFormState)
+        }
+
+        fetch("/login", configObj)
+        .then(res => {
+            if (res.ok){
+                res.json().then((data)=> {
+                    setUser({...data, logged_in: true});
+                    navigate('/home');
+                })
+            }else{
+                navigate('/')
+            }
+        })
     }
     //A function that handles creating a new account
     //TO DO: Make  a fetch request to post a new user and start a new session (aka log them in.)
@@ -58,11 +86,11 @@ function Login(){
                 <Form onSubmit={handleLoginSubmit} style={{textAlign: "left"}}>
                     <Form.Group>
                         <Form.Label>Username:</Form.Label>
-                        <Form.Control type="text" placeholder="Username" value={username} name="username" onChange={handleLoginChange}></Form.Control>
+                        <Form.Control required type="text" placeholder="Username" value={username} name="username" onChange={handleLoginChange}></Form.Control>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Password:</Form.Label>
-                        <Form.Control type="password" placeholder="Password" value={password} name="password" onChange={handleLoginChange}></Form.Control>
+                        <Form.Control required type="password" placeholder="Password" value={password} name="password" onChange={handleLoginChange}></Form.Control>
                     </Form.Group>
                     <Button type="submit">Login</Button>
                 </Form>

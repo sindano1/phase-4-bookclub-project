@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import { UserProvider } from './Components/UserContext/UserContext';
 import './App.css';
 import { Routes, Route, Link } from "react-router-dom";
 import Home from './Components/Home/Home';
@@ -14,6 +15,7 @@ import Footer from './Components/Footer/Footer';
 function App() {
   return (
     <div className="App">
+      <UserProvider>
       <NavBar />
       <Routes>
         <Route path="/" element={<Landing />}/>
@@ -26,6 +28,7 @@ function App() {
         <Route path="book-clubs" element={<BookClub />}/>
       </Routes>
       <Footer/>
+      </UserProvider>
     </div>
   );
 }
