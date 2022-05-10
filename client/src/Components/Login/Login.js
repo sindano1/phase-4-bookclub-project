@@ -50,7 +50,7 @@ function Login(){
         .then(res => {
             if (res.ok){
                 res.json().then((data)=> {
-                    setUser(data);
+                    setUser({...data, logged_in: true});
                     navigate('/home');
                 })
             }else{
