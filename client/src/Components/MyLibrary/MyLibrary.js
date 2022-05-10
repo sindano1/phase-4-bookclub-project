@@ -37,16 +37,16 @@ function MyLibrary(){
     function handleClose(){
         setShowModal(false);
     }
-    //This is a functino that handles when the user submits their search query
-    function handleNewBookSubmission(e){
+    //This is a function that handles when the user submits their search query
+    function handleNewBookSubmission(e) {
         e.preventDefault();
         //Take the form value from the state
         //Split the string, add + to add into the fetch request
         const parsedValue = newBookFormState.split(" ");
         console.log("ParsedValue", parsedValue);
-        
+
         //May need to remove the "+" from the last word in the array
-        const formattedValue = parsedValue.map(word=>word + "+");
+        const formattedValue = parsedValue.map(word => word + "+");
         console.log("FormattedValue", formattedValue);
 
         const queryString = formattedValue.join('');
@@ -54,14 +54,25 @@ function MyLibrary(){
 
         //Make the fetch request
         fetch(`http://openlibrary.org/search.json?q=${queryString}`)
-        // Maybe add some error handling here
-        .then(res=>res.json())
-        .then(searchData => {
-            console.log(searchData);
-            setShowModal(true);
-            setSearchData(searchData);
-            
-        });
+            // Maybe add some error handling here
+            .then(res => res.json())
+            .then(searchData => {
+                console.log(searchData
+                    .docs
+                    .slice(0, 10)
+                    .map(book => {
+                        const title = book.title
+                        const author = book.author_name
+                        const isbn = book.isbn[0]
+                        console.log(`${title} ${author} ${isbn}`)
+                    })
+                    // .slice(0, 10)
+                )
+                // .map fuction above is returning an array of undefined in addtion to our results
+                setShowModal(true);
+                setSearchData(searchData);
+            }
+            );
     }
     // At some point we will map over a user's unread books, read books and reviews
     const mappedUnreadBooks = [];
