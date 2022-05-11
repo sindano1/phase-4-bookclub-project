@@ -30,6 +30,7 @@ class UsersController < ApplicationController
     end
 
     def store_books
+    
         # Check if book instance exists and if the key matches another
         book = Book.find_by(key: params[:key])
         if book && params[:key] == Book.find_by(key: params[:key]).key

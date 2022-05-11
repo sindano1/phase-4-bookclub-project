@@ -25,7 +25,7 @@ puts 'Seeding users'
 10.times do
     User.create!(
         username: Faker::Name.first_name ,
-        password_digest: "password",
+        password: "password",
         first_name: Faker::Name.first_name,
         last_name: Faker::Name.last_name ,
         birthday: Faker::Date.between(from: '1930-01-01', to: '2009-05-05'),
