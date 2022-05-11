@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
     before_action :find_user, only: [:show, :update, :destroy]
     # TO DO: remove index from the skip_before_action
-    skip_before_action :authorize, only: [:create, :show, :index, :store_books]
+    skip_before_action :authorize, only: [:create, :show, :index]
 
     def index
         render json: User.all
