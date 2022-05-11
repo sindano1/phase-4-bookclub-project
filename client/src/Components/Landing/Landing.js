@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../UserContext/UserContext";
+import useLoginState from "../../CustomHooks/useLoginState";
 import "./Landing.css";
 import { Link } from "react-router-dom";
 
 
+
 function Landing(){
+    const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+    useLoginState();
     return(
         <>
         <header style={{textAlign: "center"}}>
@@ -24,7 +29,7 @@ function Landing(){
 
         </article>
         
-        <p><Link to="/login"> Login / Create New Account</Link></p>
+        <p>{isLoggedIn ? null : <Link to="/login"> Login / Create New Account</Link>}</p>
         </>
     )
 }

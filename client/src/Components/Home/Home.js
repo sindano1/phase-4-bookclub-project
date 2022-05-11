@@ -1,5 +1,7 @@
 import React, { useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext/UserContext";
+import useLoginState from "../../CustomHooks/useLoginState";
 import "./Home.css"
 import Login from "../Login/Login";
 import DashboardContainer from "../DashboardContainer/DashboardContainer";
@@ -10,7 +12,9 @@ import NavCard from "../NavCard/NavCard";
 
 //A Component that represents the first page that a user lands on after logging in
 function Home() {
-    const { user, setUser } = useContext(UserContext);
+    useLoginState();
+    const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+    // const navigate = useNavigate();
     //Dashboard Content
     const dashHeader = <h1>Welcome {user.first_name}!</h1>
     const dashBody = (<Container>
@@ -42,20 +46,20 @@ function Home() {
     const bookClubButton = "My Book Clubs"
     const bookClubLink = "book-clubs"
 
-    useEffect(()=>{
-        fetch("/auth")
-        .then(res => {
-            if(res.ok){
-                res.json().then(user => setUser(user))
-            }else{
-                console.log("nope")
-            }
-        })
-    },[setUser])
+    // useEffect(()=>{
+    //     fetch("/auth")
+    //     .then(res => {
+    //         if(res.ok){
+    //             res.json().then(user => {
+    //                 setUser(user);
+    //                 setIsLoggedIn(true);
+    //             })
+    //         }else{
+    //             navigate("login");
+    //         }
+    //     })
+    // },[setUser, setIsLoggedIn, navigate])
     
-    if (!user){
-        return <Login/>
-    }
     return(
         <>
         <DashboardContainer header={dashHeader} body={dashBody} id={dashboardId}/>
