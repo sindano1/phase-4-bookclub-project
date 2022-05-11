@@ -26,9 +26,10 @@ function MyLibrary() {
         "title" : "",
         "author" : "",
         "genre" : "",
+        "number_of_pages" : "",
         "image": ""
     });
-    const { title, author, genre, image } = manualBookForm;
+    const { title, author, genre, number_of_pages, image } = manualBookForm;
 
     //Jumbotron Content
     const dashHeader = <h1>{user.username}'s Library</h1>
@@ -37,7 +38,7 @@ function MyLibrary() {
             <h2>Track your books. Find new adventures. Leave reviews.</h2>
             {/* Add another page for manual book entry that does not use the API and allows a user to input title, author and an image. */}
             <Form onSubmit={handleNewBookSubmission}>
-                <Form.Label>Search for books to add to your reading list. Can't find your book? Add one manually <span onClick={handleManualBookSubmission}>here</span>.</Form.Label>
+                <Form.Label>Search for books to add to your reading list. Can't find your book? Add one manually <span onClick={handleManualBookSubmission} id="manual-book" style={{textDecoration:"underline"}}>here</span>.</Form.Label>
                 <Form.Control type="text" name="booksearch" value={newBookFormState} onChange={handleFormChange} placeholder="Search for a book title, author or genre"></Form.Control>
             </Form>
         </>
@@ -57,6 +58,7 @@ function MyLibrary() {
             "title" : "",
             "author" : "",
             "genre" : "",
+            "number_of_pages" : "",
             "image": ""
         })
         setShowManualModal(false);
@@ -68,9 +70,17 @@ function MyLibrary() {
         console.log(e.target.name)
         setManualBookForm({...manualBookForm, [e.target.name] : e.target.value})
     }
-    function handleManualBookPost(){
+    function handleManualBookPost(e){
+        e.preventDefault();
         //Make a post to the database
         console.log(manualBookForm)
+        setManualBookForm({
+            "title" : "",
+            "author" : "",
+            "genre" : "",
+            "number_of_pages" : "",
+            "image": ""
+        })
     }
 
     //This is a function that handles when the user submits their search query
@@ -209,18 +219,22 @@ function MyLibrary() {
                     <Form onSubmit={handleManualBookPost}>
                         <Form.Group>
                             <Form.Label>Book Title:</Form.Label>
-                            <Form.Control type="text" name="title" value={title} onChange={handleManualFormChange} placeholder="Book Title"></Form.Control>
+                            <Form.Control required type="text" name="title" value={title} onChange={handleManualFormChange} placeholder="Book Title"></Form.Control>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Author:</Form.Label>
-                            <Form.Control type="text" name="author" value={author} onChange={handleManualFormChange} placeholder="Author"></Form.Control>
+                            <Form.Control required type="text" name="author" value={author} onChange={handleManualFormChange} placeholder="Author"></Form.Control>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Genre:</Form.Label>
+                            <Form.Label>Genre (optional):</Form.Label>
                             <Form.Control type="text" name="genre" value={genre} onChange={handleManualFormChange} placeholder="Genre"></Form.Control>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Image URL:</Form.Label>
+                            <Form.Label>Number of Pages (optional):</Form.Label>
+                            <Form.Control type="number" name="number_of_pages" value={number_of_pages} onChange={handleManualFormChange}></Form.Control>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Image URL (optional):</Form.Label>
                             <Form.Control type="text" name="image" value={image} onChange={handleManualFormChange} placeholder="Image"></Form.Control>
                         </Form.Group>
                     </Form>
