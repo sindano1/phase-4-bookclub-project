@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../UserContext/UserContext";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
@@ -10,7 +10,9 @@ import Row from "react-bootstrap/Row";
 
 function Login(){
     //Fetch the user states from UserContext
-    const { user, setUser } = useContext(UserContext);
+    const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+    //Use Navigate
+    const navigate = useNavigate();
 
     //Two states for each form.
     const [loginFormState, setLoginFormState] = useState({
@@ -30,8 +32,7 @@ function Login(){
     const {username, password} = loginFormState;
     const {first_name, last_name, birthday, new_username, new_password, verify_password} = newAccountFormState;
 
-    //Use Navigate
-    const navigate = useNavigate();
+
     //A function that handles logging in
     //TO DO: Make a fetch request to start a new user session.
     function handleLoginSubmit(e){
@@ -50,7 +51,8 @@ function Login(){
         .then(res => {
             if (res.ok){
                 res.json().then((data)=> {
-                    setUser({...data, logged_in: true});
+                    setUser(data);
+                    setIsLoggedIn(true);
                     navigate('/home');
                 })
             }else{

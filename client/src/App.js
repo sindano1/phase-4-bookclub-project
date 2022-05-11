@@ -1,4 +1,5 @@
-import logo from './logo.svg';
+import { useEffect, useContext } from "react";
+import { UserContext } from "./Components/UserContext/UserContext";
 import { UserProvider } from './Components/UserContext/UserContext';
 import './App.css';
 import { Routes, Route, Link } from "react-router-dom";
@@ -13,8 +14,10 @@ import NavBar from './Components/NavBar/NavBar';
 import Footer from './Components/Footer/Footer';
 
 function App() {
+
   return (
     <div className="App">
+      {/* The UserProvider provides us with the user state.  */}
       <UserProvider>
       <NavBar />
       <Routes>

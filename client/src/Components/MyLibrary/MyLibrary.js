@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext} from "react";
+import { UserContext } from "../UserContext/UserContext";
+import useLoginState from "../../CustomHooks/useLoginState";
 import "./MyLibrary.css";
 import { Link } from "react-router-dom";
 import DashboardContainer from "../DashboardContainer/DashboardContainer";
@@ -11,12 +13,14 @@ import Modal from 'react-bootstrap/Modal';
 import ResultsCard from '../ResultsCard/ResultsCard';
 
 function MyLibrary() {
+    const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+    useLoginState();
     const [newBookFormState, setNewBookFormState] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [searchData, setSearchData] = useState([]);
 
     //Jumbotron Content
-    const dashHeader = <h1>Library</h1>
+    const dashHeader = <h1>{user.username}'s Library</h1>
     const dashBody = (
         <>
             <h2>Track your books. Find new adventures. Leave reviews.</h2>
@@ -62,27 +66,7 @@ function MyLibrary() {
             })
     };
 
-    // Will use this function to post a book and read through a user
-    // needs to map through the array from the add button and post to store-books
-    
-    // function handleAddReads(){
-    //    fetch(`http://localhost:3000/store-books`, {
-    //        method: "POST",
-    //        headers: {
-    //            "Content-Type": "application/json",
-    //            Accept: "application/json"
-    //        },
-    //        body: JSON.stringify({
-    //            key: value
-    //        })
-    //    })
-    //    .then( res => res.json())
-    //    .then( data => console.log(data))
-    //    .catch( error => console.log(error.message));
-    // }
-
     function renderSearchData() {
-        console.log(searchData)
         // This if is to prevent the empty state array from erroring the render
         if (searchData.length === 0) {
             // The return here has not loaded
