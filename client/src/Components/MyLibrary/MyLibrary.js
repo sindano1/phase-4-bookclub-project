@@ -14,6 +14,7 @@ function MyLibrary() {
     const [newBookFormState, setNewBookFormState] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [searchData, setSearchData] = useState([]);
+    const [addBook, setAddBook] = useState([])
 
     //Jumbotron Content
     const dashHeader = <h1>Library</h1>
@@ -61,28 +62,25 @@ function MyLibrary() {
                 setSearchData(searchData);
             })
     };
-
-    // Will use this function to post a book and read through a user
-    // needs to map through the array from the add button and post to store-books
-    
-    // function handleAddReads(){
-    //    fetch(`http://localhost:3000/store-books`, {
-    //        method: "POST",
-    //        headers: {
-    //            "Content-Type": "application/json",
-    //            Accept: "application/json"
-    //        },
-    //        body: JSON.stringify({
-    //            key: value
-    //        })
-    //    })
-    //    .then( res => res.json())
-    //    .then( data => console.log(data))
-    //    .catch( error => console.log(error.message));
-    // }
+ 
+    function handleStoreBooks(addBookArray) {
+        fetch(`http://localhost:3000/store-books`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify({
+                addBook
+            })
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error.message));
+    }
 
     function renderSearchData() {
-        console.log(searchData)
+        // console.log(searchData)
         // This if is to prevent the empty state array from erroring the render
         if (searchData.length === 0) {
             // The return here has not loaded
@@ -90,7 +88,7 @@ function MyLibrary() {
         } else {
             // Map through the first 10 results to return cover art, title, author
             const mappedResults = searchData.docs.slice(0, 10).map(book => {
-                return <ResultsCard book = {book}/>
+                return <ResultsCard book = {book} addBook = {addBook} setAddBook = {setAddBook} handleStoreBooks = {handleStoreBooks}/>
             }
             )
             // Preventing errors
@@ -168,7 +166,7 @@ function MyLibrary() {
             </Container>
             <Modal show={showModal} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal title</Modal.Title>
+                    <Modal.Title>Search Results: {newBookFormState}</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
@@ -177,8 +175,7 @@ function MyLibrary() {
 
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>Close</Button>
-                    <Button variant="primary" >Save changes</Button>
-                    {/* onClick={handleAddReads} */}
+                    <Button variant="primary" onClick={handleStoreBooks} >Add Selected Books to Your Reading List</Button>
                 </Modal.Footer>
             </Modal>
 
