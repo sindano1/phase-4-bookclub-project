@@ -35,7 +35,7 @@ function NavBar(){
         <>
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href="/">Book Club App</Navbar.Brand>
+                <Navbar.Brand href="/">Overbooked</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">

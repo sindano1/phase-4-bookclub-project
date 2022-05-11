@@ -8,11 +8,11 @@ import { Link } from "react-router-dom";
 
 function Landing(){
     const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(UserContext);
-    useLoginState();
+    // useLoginState();
     return(
         <>
         <header style={{textAlign: "center"}}>
-            <h1>Book Club App</h1>
+            <h1>Overbooked</h1>
             <h3>The best app to engage with your reading.</h3>
         </header>
         <article style={{textAlign: "left"}}>
