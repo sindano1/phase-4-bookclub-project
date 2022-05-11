@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   # Custom route to stay logged in
   get "/auth", to: "sessions#show"
 
+  # Custom route to store a book and a read through a user
+  post "/store-books", to: "users#store_books"
+
 
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
