@@ -62,6 +62,46 @@ function MyLibrary() {
             })
     };
 
+    // Will use this function to post a book and read through a user
+    // needs to map through the array from the add button and post to store-books
+    
+    // function handleAddReads(){
+    //    fetch(`http://localhost:3000/store-books`, {
+    //        method: "POST",
+    //        headers: {
+    //            "Content-Type": "application/json",
+    //            Accept: "application/json"
+    //        },
+    //        body: JSON.stringify({
+    //            key: value
+    //        })
+    //    })
+    //    .then( res => res.json())
+    //    .then( data => console.log(data))
+    //    .catch( error => console.log(error.message));
+    // }
+
+    function renderSearchData() {
+        console.log(searchData)
+        // This if is to prevent the empty state array from erroring the render
+        if (searchData.length === 0) {
+            // The return here has not loaded
+            return <p>Loading...</p>
+        } else {
+            // Map through the first 10 results to return cover art, title, author
+            const mappedResults = searchData.docs.slice(0, 10).map(book => {
+                return <ResultsCard book = {book}/>
+            }
+            )
+            // Preventing errors
+            if (mappedResults === undefined) {
+                return <p>Loading...</p>
+            } else {
+                return mappedResults;
+            }
+        }
+    }
+
 
     // At some point we will map over a user's unread books, read books and reviews
     const mappedUnreadBooks = [];
@@ -132,12 +172,13 @@ function MyLibrary() {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <ResultsCard searchData={searchData} />
+                    {renderSearchData()}
                 </Modal.Body>
 
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>Close</Button>
-                    <Button variant="primary" onClick={handleClose}>Save changes</Button>
+                    <Button variant="primary" >Save changes</Button>
+                    {/* onClick={handleAddReads} */}
                 </Modal.Footer>
             </Modal>
 

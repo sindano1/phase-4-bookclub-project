@@ -28,6 +28,21 @@ class UsersController < ApplicationController
    # double check this one -> render json: {}, status :accepted
     end
 
+    def store_books
+        # Check if book instance exists and if the key matches another
+        book = Book.find_by(key: params[:key])
+        if book && params[:key] == Book.find_by(key: params[:key]).key
+            # Create a read instance using the original book
+            new_read = Read.create!(user_id: session[:user_id], book_id: book.id)
+        else
+            # Create a new book and a new read instance of that book
+            new_book = Book.create!(book_params)
+            new_read = Read.create!(user_id: session[:user_id], book_id: new_book.id)
+        end
+        
+        render json: new_read
+    end
+
 private
 
     def find_user
@@ -37,5 +52,9 @@ private
     def user_params
         params.permit(:username, :password, :first_name, :last_name, :birthday)
     #can a user assign their own default club id?
+    end
+
+    def book_params
+        params.permit(:title, :author, :image, :key)
     end
 end
