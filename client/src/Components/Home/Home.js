@@ -12,11 +12,13 @@ import NavCard from "../NavCard/NavCard";
 
 //A Component that represents the first page that a user lands on after logging in
 function Home() {
+
     useLoginState();
+
     const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(UserContext);
     // const navigate = useNavigate();
     //Dashboard Content
-    const dashHeader = <h1>Welcome {user.first_name}!</h1>
+    const dashHeader = <h1>Welcome {user.username}!</h1>
     const dashBody = (<Container>
                         <Row>
                             <Col sm={6} md={4}>
