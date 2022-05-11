@@ -68,20 +68,22 @@ function MyLibrary() {
     };
  
     function handleStoreBooks(addBookArray) {
-        fetch(`http://localhost:3000/store-books`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json"
-            },
-            body: JSON.stringify({
-                addBook
+        addBook.forEach(bookObj => {
+            fetch(`/store-books`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json"
+                },
+                body: JSON.stringify(
+                    bookObj
+                )
             })
-        })
             .then(res => res.json())
             .then(data => console.log(data))
             .catch(error => console.log(error.message));
-    }
+        })
+        }
 
     function renderSearchData() {
         // console.log(searchData)

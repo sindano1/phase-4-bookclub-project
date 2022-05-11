@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
     before_action :find_user, only: [:show, :update, :destroy]
     # TO DO: remove index from the skip_before_action
-    skip_before_action :authorize, only: [:create, :show, :index]
+    skip_before_action :authorize, only: [:create, :show, :index, :store_books]
 
     def index
         render json: User.all
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     
         # Check if book instance exists and if the key matches another
         book = Book.find_by(key: params[:key])
-        if book && params[:key] == Book.find_by(key: params[:key]).key
+        if book && params[:key] == Book.find_by(key: params[:key]).key && book.key != nil
             # Create a read instance using the original book
             new_read = Read.create!(user_id: session[:user_id], book_id: book.id)
         else
