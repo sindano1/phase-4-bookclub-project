@@ -26,10 +26,9 @@ function MyLibrary() {
         "title" : "",
         "author" : "",
         "genre" : "",
-        "number_of_pages" : "",
         "image": ""
     });
-    const { title, author, genre, number_of_pages, image } = manualBookForm;
+    const { title, author, genre, image } = manualBookForm;
 
     //Jumbotron Content
     const dashHeader = <h1>{user.username}'s Library</h1>
@@ -58,27 +57,49 @@ function MyLibrary() {
             "title" : "",
             "author" : "",
             "genre" : "",
-            "number_of_pages" : "",
             "image": ""
         })
         setShowManualModal(false);
     }
+
+    //This function only opens the manula book modal
     function handleManualBookSubmission(){
         setShowManualModal(true);
     }
+
     function handleManualFormChange(e){
         console.log(e.target.name)
         setManualBookForm({...manualBookForm, [e.target.name] : e.target.value})
     }
+
+    //This function handles posting a book manually
     function handleManualBookPost(e){
         e.preventDefault();
         //Make a post to the database
         console.log(manualBookForm)
+
+        const configObj = {
+            method: "POST", 
+            headers : {
+                "Content-Type" : "application/json",
+                "Accepted" : "application/json"
+            },
+            body : JSON.stringify(manualBookForm)
+        }
+
+        fetch("/store-books", configObj)
+        .then(res => {
+            if (res.ok){
+                res.json().then( addedBook => console.log("Book added successfully! ", addedBook))
+            }else{
+                console.log("Oops. Something went wrong.")
+            }
+        })
+
         setManualBookForm({
             "title" : "",
             "author" : "",
             "genre" : "",
-            "number_of_pages" : "",
             "image": ""
         })
     }
@@ -228,10 +249,6 @@ function MyLibrary() {
                         <Form.Group>
                             <Form.Label>Genre (optional):</Form.Label>
                             <Form.Control type="text" name="genre" value={genre} onChange={handleManualFormChange} placeholder="Genre"></Form.Control>
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Number of Pages (optional):</Form.Label>
-                            <Form.Control type="number" name="number_of_pages" value={number_of_pages} onChange={handleManualFormChange}></Form.Control>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Image URL (optional):</Form.Label>
