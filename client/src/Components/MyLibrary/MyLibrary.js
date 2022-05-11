@@ -16,7 +16,10 @@ function MyLibrary() {
     const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(UserContext);
     useLoginState();
     const [newBookFormState, setNewBookFormState] = useState("");
+    //Two separate modal states: one for the modal that pops up when the user searches a book
+    //One that pops up when the user chooses to manually enter a book
     const [showModal, setShowModal] = useState(false);
+    const [showManualModal, setShowManualModal] = useState(false);
     const [searchData, setSearchData] = useState([]);
 
     //Jumbotron Content
@@ -26,7 +29,7 @@ function MyLibrary() {
             <h2>Track your books. Find new adventures. Leave reviews.</h2>
             {/* Add another page for manual book entry that does not use the API and allows a user to input title, author and an image. */}
             <Form onSubmit={handleNewBookSubmission}>
-                <Form.Label>Search for books to add to your reading list. Can't find your book? Add one manually <Link to="/">here</Link>.</Form.Label>
+                <Form.Label>Search for books to add to your reading list. Can't find your book? Add one manually <span onClick={handleManualBookSubmission}>here</span>.</Form.Label>
                 <Form.Control type="text" name="booksearch" value={newBookFormState} onChange={handleFormChange} placeholder="Search for a book title, author or genre"></Form.Control>
             </Form>
         </>
@@ -41,6 +44,13 @@ function MyLibrary() {
     function handleClose() {
         setShowModal(false);
     }
+    function handleManualModalClose(){
+        setShowManualModal(false);
+    }
+    function handleManualBookSubmission(){
+        setShowManualModal(true);
+    }
+
     //This is a function that handles when the user submits their search query
     function handleNewBookSubmission(e) {
         e.preventDefault();
@@ -163,6 +173,33 @@ function MyLibrary() {
                     <Button variant="secondary" onClick={handleClose}>Close</Button>
                     <Button variant="primary" >Save changes</Button>
                     {/* onClick={handleAddReads} */}
+                </Modal.Footer>
+            </Modal>
+            <Modal show={showManualModal} onHide={handleManualModalClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Enter Book Manually:</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Book Title:</Form.Label>
+                            <Form.Control type="text" placeholder="Book Title"></Form.Control>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Author:</Form.Label>
+                            <Form.Control type="text" placeholder="Book Title"></Form.Control>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Image URL:</Form.Label>
+                            <Form.Control type="text" placeholder="Book Title"></Form.Control>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                    <Button variant="primary" >Add Book</Button>
                 </Modal.Footer>
             </Modal>
 
