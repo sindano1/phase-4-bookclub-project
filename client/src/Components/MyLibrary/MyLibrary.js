@@ -20,7 +20,14 @@ function MyLibrary() {
     //One that pops up when the user chooses to manually enter a book
     const [showModal, setShowModal] = useState(false);
     const [showManualModal, setShowManualModal] = useState(false);
+
     const [searchData, setSearchData] = useState([]);
+    const [manualBookForm, setManualBookForm] = useState({
+        "book_title" : "",
+        "author" : "",
+        "book_image": ""
+    });
+    const { book_title, author, book_image } = manualBookForm;
 
     //Jumbotron Content
     const dashHeader = <h1>{user.username}'s Library</h1>
@@ -49,6 +56,14 @@ function MyLibrary() {
     }
     function handleManualBookSubmission(){
         setShowManualModal(true);
+    }
+    function handleManualFormChange(e){
+        console.log(e.target.name)
+        setManualBookForm({...manualBookForm, [e.target.name] : e.target.value})
+    }
+    function handleManualBookPost(){
+        //Make a post to the database
+        console.log(manualBookForm)
     }
 
     //This is a function that handles when the user submits their search query
@@ -160,6 +175,8 @@ function MyLibrary() {
                     </Col>
                 </Row>
             </Container>
+
+            {/* Book API Search Modal */}
             <Modal show={showModal} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Modal title</Modal.Title>
@@ -180,29 +197,29 @@ function MyLibrary() {
                     <Modal.Title>Enter Book Manually:</Modal.Title>
                 </Modal.Header>
 
+                {/* MANUAL BOOK ENTRY MODAL */}
                 <Modal.Body>
-                    <Form>
+                    <Form onSubmit={handleManualBookPost}>
                         <Form.Group>
                             <Form.Label>Book Title:</Form.Label>
-                            <Form.Control type="text" placeholder="Book Title"></Form.Control>
+                            <Form.Control type="text" name="book_title" value={book_title} onChange={handleManualFormChange} placeholder="Book Title"></Form.Control>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Author:</Form.Label>
-                            <Form.Control type="text" placeholder="Book Title"></Form.Control>
+                            <Form.Control type="text" name="author" value={author} onChange={handleManualFormChange} placeholder="Book Title"></Form.Control>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Image URL:</Form.Label>
-                            <Form.Control type="text" placeholder="Book Title"></Form.Control>
+                            <Form.Control type="text" name="book_image" value={book_image} onChange={handleManualFormChange} placeholder="Book Title"></Form.Control>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
 
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>Close</Button>
-                    <Button variant="primary" >Add Book</Button>
+                    <Button variant="primary" type="submit" >Add Book</Button>
                 </Modal.Footer>
             </Modal>
-
         </>
     )
 }
