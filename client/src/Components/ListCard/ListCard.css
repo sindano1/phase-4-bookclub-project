@@ -1,0 +1,23 @@
+.list-card{
+    width: 100%;
+    padding: 10px;
+    border: 1px #FFBE0FAA solid; 
+    margin-top: 5px;
+    margin-bottom: 2px;
+    border-radius: 2px;
+    background-color: #FFBE0FAA;
+    transition: all 0.5s;
+}
+.list-card:hover{
+    border: 2px solid black;
+    box-shadow: 5px 10px;
+    transform: translate(5px, 5px);
+    cursor: pointer;
+    background-color: #FFBE0F;
+}
+
+.image-container{
+    width: 75px;
+    height: 100px;
+    background-color: lightgray;
+}

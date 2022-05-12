@@ -1,9 +1,11 @@
 import React, { useState, useContext} from "react";
 import { UserContext } from "../UserContext/UserContext";
 import useLoginState from "../../CustomHooks/useLoginState";
+import useRetrieveUserBooks from "../../CustomHooks/useRetrieveUserBooks";
 import "./MyLibrary.css";
 import { Link } from "react-router-dom";
 import DashboardContainer from "../DashboardContainer/DashboardContainer";
+import ListCard from "../ListCard/ListCard";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,8 +15,13 @@ import Modal from 'react-bootstrap/Modal';
 import ResultsCard from '../ResultsCard/ResultsCard';
 
 function MyLibrary() {
-    const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+    const { user, userLibrary, setUserLibrary } = useContext(UserContext);
+
+    //Retrieve user if logged in
     useLoginState();
+    //Retrieve a user's books if logged in
+    useRetrieveUserBooks();
+
     const [newBookFormState, setNewBookFormState] = useState("");
     //Two separate modal states: one for the modal that pops up when the user searches a book
     //One that pops up when the user chooses to manually enter a book
@@ -22,7 +29,6 @@ function MyLibrary() {
     const [showManualModal, setShowManualModal] = useState(false);
 
     const [searchData, setSearchData] = useState([]);
-<<<<<<< HEAD
     const [manualBookForm, setManualBookForm] = useState({
         "title" : "",
         "author" : "",
@@ -30,9 +36,7 @@ function MyLibrary() {
         "image": ""
     });
     const { title, author, genre, image } = manualBookForm;
-=======
     const [addBook, setAddBook] = useState([])
->>>>>>> main
 
     //Jumbotron Content
     const dashHeader = <h1>{user.username}'s Library</h1>
@@ -94,7 +98,8 @@ function MyLibrary() {
         fetch("/store-books", configObj)
         .then(res => {
             if (res.ok){
-                res.json().then( addedBook => console.log("Book added successfully! ", addedBook))
+                //Currently the data that is being returned is not serialized the way I want it to. CHANGE THIS!
+                res.json().then( addedBook => setUserLibrary([...userLibrary, addedBook]))
             }else{
                 console.log("Oops. Something went wrong.")
             }
@@ -106,6 +111,7 @@ function MyLibrary() {
             "genre" : "",
             "image": ""
         })
+        setShowManualModal(false);
     }
 
     //This is a function that handles when the user submits their search query
@@ -174,8 +180,8 @@ function MyLibrary() {
 
 
     // At some point we will map over a user's unread books, read books and reviews
-    const mappedUnreadBooks = [];
-    const mappedCurrentlyReadingBOoks = [];
+    const mappedUnreadBooks = userLibrary.map(bookObject => <ListCard bookObject={bookObject} />);
+    const mappedCurrentlyReadingBooks = [];
     const mappedReadBooks = [];
     const mappedReviews = [];
 
@@ -197,7 +203,7 @@ function MyLibrary() {
                                     <header>
                                         <h4>Currently Reading</h4>
                                     </header>
-                                    {mappedCurrentlyReadingBOoks.length === 0 ? <p className="empty-array=msg">You are not currently reading any books.</p> : <ol>{mappedCurrentlyReadingBOoks}</ol>}
+                                    {mappedCurrentlyReadingBooks.length === 0 ? <p className="empty-array=msg">You are not currently reading any books.</p> : <ol>{mappedCurrentlyReadingBooks}</ol>}
                                 </section>
                                 <hr />
                                 <header>
@@ -276,13 +282,15 @@ function MyLibrary() {
                             <Form.Label>Image URL (optional):</Form.Label>
                             <Form.Control type="text" name="image" value={image} onChange={handleManualFormChange} placeholder="Image"></Form.Control>
                         </Form.Group>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleManualModalClose}>Cancel</Button>
+                            <Button variant="primary" type="submit" >Add Book</Button>
+                        </Modal.Footer>
+                        
                     </Form>
                 </Modal.Body>
 
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleManualModalClose}>Cancel</Button>
-                    <Button variant="primary" type="submit" >Add Book</Button>
-                </Modal.Footer>
+                
             </Modal>
         </>
     )

@@ -41,8 +41,12 @@ class UsersController < ApplicationController
             new_book = Book.create!(book_params)
             new_read = Read.create!(user_id: session[:user_id], book_id: new_book.id)
         end
-        
-        render json: new_read
+        render json: new_read.book    
+    end
+
+    def show_library
+        currentUser = User.find(session[:user_id])
+        render json: currentUser.books
     end
 
 private
