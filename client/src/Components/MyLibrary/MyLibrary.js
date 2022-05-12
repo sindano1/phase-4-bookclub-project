@@ -27,7 +27,6 @@ function MyLibrary() {
     //One that pops up when the user chooses to manually enter a book
     const [showModal, setShowModal] = useState(false);
     const [showManualModal, setShowManualModal] = useState(false);
-    const [showEditModal, setshowEditModal] = useState(false);
 
     const [searchData, setSearchData] = useState([]);
     const [manualBookForm, setManualBookForm] = useState({
@@ -62,9 +61,6 @@ function MyLibrary() {
         setShowModal(false);
     }
 
-    function handleCloseEditModal(){
-        setshowEditModal(false);
-    }
     function handleManualModalClose(){
         setManualBookForm({
             "title" : "",
@@ -299,15 +295,6 @@ function MyLibrary() {
                 </Modal.Body>
             </Modal>
 
-            {/* EDIT BOOK MODAL */}
-            <Modal show={showEditModal} onHide={handleCloseEditModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>[Book Name]</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    
-                </Modal.Body>
-            </Modal>
         </>
     )
 }
