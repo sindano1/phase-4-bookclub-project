@@ -1,4 +1,25 @@
 .results-card {
     border: 1px solid black;
-    border-radius: 5px
+    border-radius: 2px;
+    margin: 10px;
+    padding: 10px;
+    background-color: #314E52AA;
+}
+
+.results-image-container{
+    width: 75px;
+    height: 100px;
+    background-color: lightgray;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.relative{
+    position: relative;
+}
+
+.absolute-center{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }

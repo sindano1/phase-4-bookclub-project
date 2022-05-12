@@ -33,3 +33,8 @@
 #root{
     background-color: #EFEFEF
 }
+
+#api-search-modal{
+    height: 80vh;
+    overflow: scroll;
+}

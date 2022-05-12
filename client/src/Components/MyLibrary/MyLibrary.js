@@ -251,10 +251,10 @@ function MyLibrary() {
             {/* Book API Search Modal */}
             <Modal show={showModal} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Search Results: {newBookFormState}</Modal.Title>
+                    <Modal.Title>Results for: <strong>{newBookFormState}</strong></Modal.Title>
                 </Modal.Header>
 
-                <Modal.Body>
+                <Modal.Body id="api-search-modal">
                     {renderSearchData()}
                 </Modal.Body>
 

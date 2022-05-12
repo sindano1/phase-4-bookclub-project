@@ -78,7 +78,7 @@ function Login(){
         <article id="login-card">
             <header>
                 <h2>Welcome to</h2>
-                <h1>Book Club App!</h1>
+                <h1>Overbooked!</h1>
             </header>
             <section>
                 <header>
