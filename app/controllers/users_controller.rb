@@ -45,6 +45,11 @@ class UsersController < ApplicationController
         render json: new_read
     end
 
+    def your_clubs
+        your_clubs = User.find_by(id: session[:user_id]).clubs
+        render json: your_clubs
+    end
+
 private
 
     def find_user

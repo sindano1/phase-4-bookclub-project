@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   # Custom route to store a book and a read through a user
   post "/store-books", to: "users#store_books"
 
+  get "/your-clubs", to: "users#your_clubs"
+
 
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
