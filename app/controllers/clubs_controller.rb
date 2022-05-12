@@ -31,6 +31,6 @@ private
     end
 
     def club_params
-        params.permit(:name, :admin_id, :description)
+        params.permit(:name, :admin_id, :description, :image)
     end
 end
