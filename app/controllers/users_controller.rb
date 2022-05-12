@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
     def show_library
         currentUser = User.find(session[:user_id])
-        render json: currentUser.books, include: :created_at
+        render json: currentUser.books
     end
 
     def your_clubs
@@ -54,6 +54,18 @@ class UsersController < ApplicationController
         render json: your_clubs
     end
 
+    def book_status
+        # find the logged in user
+        currentUser = User.find(session[:user_id])
+        # get their books
+        specific_reads = currentUser.books
+        # return the reads
+        .map{|b| b.reads}.flatten
+        # filter each read for the specific user
+        .filter_map{ |read| read if read.user_id == session[:user_id] }
+        render json: specific_reads
+    end
+    
 private
 
     def find_user
