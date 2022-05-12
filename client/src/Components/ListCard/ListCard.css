@@ -45,3 +45,18 @@
     top: 50%;
     transform: translateY(-50%);
 }
+.book-modal-container{
+    padding: 20px;
+}
+.create-update{
+    text-align: center;
+    color: gray;
+}
+.info-row{
+    background-color: #FFBE0FAA;
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 2px;
+    height: 100%
+
+}

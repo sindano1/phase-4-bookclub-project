@@ -47,14 +47,22 @@ function ListCard({bookObject}) {
             </Container>
         </div>
         <hr/>
+
         {/* EDIT BOOK MODAL */}
-        <Modal show={showEditModal} onHide={handleCloseEditModal} fullscreen>
+        <Modal className="modal-background" show={showEditModal} onHide={handleCloseEditModal} fullscreen>
             <Modal.Header closeButton>
-                <Modal.Title><span>{bookObject.title}</span> by <span>{bookObject.author} </span></Modal.Title>
-                
+                <Modal.Title><strong style={{fontSize: "40px"}}>{bookObject.title}</strong> by {bookObject.author}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Container>
+                <Container className="book-modal-container">
+                    <Row>
+                        <Col className="create-update">
+                            <p><strong>Added on: {bookObject.created_at}</strong></p>
+                        </Col>
+                        <Col className="create-update">
+                            <p><strong>Updated on: {bookObject.updated_at}</strong></p>
+                        </Col>
+                    </Row>
                     <Row>
                         <Col sm={12} md={3}>
                             <div className="large-image-container" style={{backgroundImage: `url(${bookObject.image === "" ? 'https://visionsinmethodology.org/wp-content/uploads/2020/06/book-cover-generic.png' : bookObject.image}`}}>
@@ -62,7 +70,7 @@ function ListCard({bookObject}) {
                         </Col>
 
                         <Col sm={12} md={9}>
-                            <Row>
+                            <Row className="info-row">
                                 <Col>
                                     <p><strong>Book Status: </strong> [Book status here]</p>
                                 </Col>
@@ -71,15 +79,6 @@ function ListCard({bookObject}) {
                                 </Col>
                             </Row>
                             
-                        </Col>
-                    </Row>
-    
-                    <Row>
-                        <Col>
-                            <p><strong>Added on: {bookObject.created_at}</strong></p>
-                        </Col>
-                        <Col>
-                            <p><strong>Updated on: {bookObject.updated_at}</strong></p>
                         </Col>
                     </Row>
                 </Container>
