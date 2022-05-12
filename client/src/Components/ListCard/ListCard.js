@@ -56,17 +56,21 @@ function ListCard({bookObject}) {
             <Modal.Body>
                 <Container>
                     <Row>
-                        <Col>
+                        <Col sm={12} md={3}>
                             <div className="large-image-container" style={{backgroundImage: `url(${bookObject.image === "" ? 'https://visionsinmethodology.org/wp-content/uploads/2020/06/book-cover-generic.png' : bookObject.image}`}}>
                             </div>
                         </Col>
 
-                        <Col>
+                        <Col sm={12} md={9}>
                             <Row>
                                 <Col>
-                                    <p>Possibly a book summary here</p>
+                                    <p><strong>Book Status: </strong> [Book status here]</p>
+                                </Col>
+                                <Col>
+                                    <p>Conditional button rendering: start reading, finished reading, put back on deck</p>
                                 </Col>
                             </Row>
+                            
                         </Col>
                     </Row>
     

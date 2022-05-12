@@ -34,7 +34,7 @@ function ResultsCard({ book, addBook, setAddBook, handleStoreBooks }) {
         <article className="results-card">
             <p>{book.title}</p>
             {book.isbn ? <img src={`https://covers.openlibrary.org/b/isbn/${book.isbn[0]}-M.jpg`} alt={book.title} /> : <p>"Book Cover Unavailable"</p>}
-            <p>{book.author_name[0]}</p>
+            <p>{book.author_name === undefined ? "No author name available" : book.author_name[0]}</p>
             {toggleAdd ? (
                 <Button variant="primary" name={book.key} onClick={handleAddToList}>Add Book</Button>
             ) : (

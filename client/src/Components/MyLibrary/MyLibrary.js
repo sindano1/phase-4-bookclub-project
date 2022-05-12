@@ -263,7 +263,7 @@ function MyLibrary() {
                     <Button variant="primary" onClick={handleStoreBooks} >Add Selected Books to Your Reading List</Button>
                 </Modal.Footer>
             </Modal>
-            ]
+            
             {/* MANUAL BOOK ENTRY MODAL */}
             <Modal show={showManualModal} onHide={handleManualModalClose}>
                 <Modal.Header closeButton>
