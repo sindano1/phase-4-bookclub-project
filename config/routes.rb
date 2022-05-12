@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   # Custom route to get the user's clubs
   get "/your-clubs", to: "users#your_clubs"
 
+  # For a user show the book information and status
+  get "/book-status", to: "users#book_status"
+
 
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
