@@ -71,21 +71,33 @@ function ListCard({bookObject}) {
 
                         <Col sm={12} md={9}>
                             <Row className="info-row">
-                                <Col>
-                                    <p><strong>Book Status: </strong> [Book status here]</p>
+                                <Col lg={3} style={{borderRight: "2px black solid"}}>
+                                    <p><strong>My Rating: </strong></p>
+                                    <p><strong>Book Status: </strong></p>
                                 </Col>
-                                <Col>
-                                    <p>Conditional button rendering: start reading, finished reading, put back on deck</p>
+                                
+                                <Col lg={9}>
+                                    <p>Books Summary:</p>
+                                    <p>Some book summary here.</p>
+                                    
+                                    <p>My Review</p>
+                                    <p>My review of the book here.</p>
                                 </Col>
                             </Row>
-                            
+                            <Row>
+                                <Col>
+                                    <p> All Reviews: </p>
+                                </Col>
+                                
+                            </Row>
                         </Col>
                     </Row>
                 </Container>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary">Save Changes</Button>
-                <Button variant="danger">Delete Book</Button>
+                <Button variant="primary">Begin Reading/Finish Reading</Button>
+                <Button variant="warning">Mark as Favorite</Button>
+                <Button variant="danger">Remove from My Library</Button>
                 <Button variant="secondary">Cancel</Button>
             </Modal.Footer>
         </Modal>
