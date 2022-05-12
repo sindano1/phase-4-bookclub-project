@@ -1,9 +1,11 @@
 import React, { useState, useContext} from "react";
 import { UserContext } from "../UserContext/UserContext";
 import useLoginState from "../../CustomHooks/useLoginState";
+import useRetrieveUserBooks from "../../CustomHooks/useRetrieveUserBooks";
 import "./MyLibrary.css";
 import { Link } from "react-router-dom";
 import DashboardContainer from "../DashboardContainer/DashboardContainer";
+import ListCard from "../ListCard/ListCard";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,11 +15,27 @@ import Modal from 'react-bootstrap/Modal';
 import ResultsCard from '../ResultsCard/ResultsCard';
 
 function MyLibrary() {
-    const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+    const { user, userLibrary, setUserLibrary } = useContext(UserContext);
+
+    //Retrieve user if logged in
     useLoginState();
+    //Retrieve a user's books if logged in
+    useRetrieveUserBooks();
+
     const [newBookFormState, setNewBookFormState] = useState("");
+    //Two separate modal states: one for the modal that pops up when the user searches a book
+    //One that pops up when the user chooses to manually enter a book
     const [showModal, setShowModal] = useState(false);
+    const [showManualModal, setShowManualModal] = useState(false);
+
     const [searchData, setSearchData] = useState([]);
+    const [manualBookForm, setManualBookForm] = useState({
+        "title" : "",
+        "author" : "",
+        "genre" : "",
+        "image": ""
+    });
+    const { title, author, genre, image } = manualBookForm;
     const [addBook, setAddBook] = useState([])
 
     //Jumbotron Content
@@ -27,7 +45,7 @@ function MyLibrary() {
             <h2>Track your books. Find new adventures. Leave reviews.</h2>
             {/* Add another page for manual book entry that does not use the API and allows a user to input title, author and an image. */}
             <Form onSubmit={handleNewBookSubmission}>
-                <Form.Label>Search for books to add to your reading list. Can't find your book? Add one manually <Link to="/">here</Link>.</Form.Label>
+                <Form.Label>Search for books to add to your reading list. Can't find your book? Add one manually <span onClick={handleManualBookSubmission} id="manual-book" style={{textDecoration:"underline"}}>here</span>.</Form.Label>
                 <Form.Control type="text" name="booksearch" value={newBookFormState} onChange={handleFormChange} placeholder="Search for a book title, author or genre"></Form.Control>
             </Form>
         </>
@@ -42,6 +60,60 @@ function MyLibrary() {
     function handleClose() {
         setShowModal(false);
     }
+    function handleManualModalClose(){
+        setManualBookForm({
+            "title" : "",
+            "author" : "",
+            "genre" : "",
+            "image": ""
+        })
+        setShowManualModal(false);
+    }
+
+    //This function only opens the manula book modal
+    function handleManualBookSubmission(){
+        setShowManualModal(true);
+    }
+
+    function handleManualFormChange(e){
+        console.log(e.target.name)
+        setManualBookForm({...manualBookForm, [e.target.name] : e.target.value})
+    }
+
+    //This function handles posting a book manually
+    function handleManualBookPost(e){
+        e.preventDefault();
+        //Make a post to the database
+        console.log(manualBookForm)
+
+        const configObj = {
+            method: "POST", 
+            headers : {
+                "Content-Type" : "application/json",
+                "Accepted" : "application/json"
+            },
+            body : JSON.stringify(manualBookForm)
+        }
+
+        fetch("/store-books", configObj)
+        .then(res => {
+            if (res.ok){
+                //Currently the data that is being returned is not serialized the way I want it to. CHANGE THIS!
+                res.json().then( addedBook => setUserLibrary([...userLibrary, addedBook]))
+            }else{
+                console.log("Oops. Something went wrong.")
+            }
+        })
+
+        setManualBookForm({
+            "title" : "",
+            "author" : "",
+            "genre" : "",
+            "image": ""
+        })
+        setShowManualModal(false);
+    }
+
     //This is a function that handles when the user submits their search query
     function handleNewBookSubmission(e) {
         e.preventDefault();
@@ -80,8 +152,12 @@ function MyLibrary() {
                 )
             })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(addedBook => {
+                setUserLibrary([...userLibrary, addedBook]);
+            })
             .catch(error => console.log(error.message));
+
+            setShowModal(false);
         })
         }
 
@@ -108,8 +184,8 @@ function MyLibrary() {
 
 
     // At some point we will map over a user's unread books, read books and reviews
-    const mappedUnreadBooks = [];
-    const mappedCurrentlyReadingBOoks = [];
+    const mappedUnreadBooks = userLibrary.map(bookObject => <ListCard bookObject={bookObject} />);
+    const mappedCurrentlyReadingBooks = [];
     const mappedReadBooks = [];
     const mappedReviews = [];
 
@@ -131,7 +207,7 @@ function MyLibrary() {
                                     <header>
                                         <h4>Currently Reading</h4>
                                     </header>
-                                    {mappedCurrentlyReadingBOoks.length === 0 ? <p className="empty-array=msg">You are not currently reading any books.</p> : <ol>{mappedCurrentlyReadingBOoks}</ol>}
+                                    {mappedCurrentlyReadingBooks.length === 0 ? <p className="empty-array=msg">You are not currently reading any books.</p> : <ol>{mappedCurrentlyReadingBooks}</ol>}
                                 </section>
                                 <hr />
                                 <header>
@@ -170,6 +246,8 @@ function MyLibrary() {
                     </Col>
                 </Row>
             </Container>
+
+            {/* Book API Search Modal */}
             <Modal show={showModal} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Search Results: {newBookFormState}</Modal.Title>
@@ -184,7 +262,40 @@ function MyLibrary() {
                     <Button variant="primary" onClick={handleStoreBooks} >Add Selected Books to Your Reading List</Button>
                 </Modal.Footer>
             </Modal>
+            <Modal show={showManualModal} onHide={handleManualModalClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Manual Book Entry:</Modal.Title>
+                </Modal.Header>
 
+                {/* MANUAL BOOK ENTRY MODAL */}
+                <Modal.Body>
+                    <Form onSubmit={handleManualBookPost}>
+                        <Form.Group>
+                            <Form.Label>Book Title:</Form.Label>
+                            <Form.Control required type="text" name="title" value={title} onChange={handleManualFormChange} placeholder="Book Title"></Form.Control>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Author:</Form.Label>
+                            <Form.Control required type="text" name="author" value={author} onChange={handleManualFormChange} placeholder="Author"></Form.Control>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Genre (optional):</Form.Label>
+                            <Form.Control type="text" name="genre" value={genre} onChange={handleManualFormChange} placeholder="Genre"></Form.Control>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Image URL (optional):</Form.Label>
+                            <Form.Control type="text" name="image" value={image} onChange={handleManualFormChange} placeholder="Image"></Form.Control>
+                        </Form.Group>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleManualModalClose}>Cancel</Button>
+                            <Button variant="primary" type="submit" >Add Book</Button>
+                        </Modal.Footer>
+                        
+                    </Form>
+                </Modal.Body>
+
+                
+            </Modal>
         </>
     )
 }

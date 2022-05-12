@@ -9,7 +9,9 @@
     border: black 1px solid;
     border-radius: 5px;
 }
-
+#manual-book:hover{
+    cursor: pointer;
+}
 .content-list > header{
     text-align: center;
 }
