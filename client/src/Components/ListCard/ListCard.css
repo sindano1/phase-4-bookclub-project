@@ -24,3 +24,24 @@
     background-repeat: no-repeat;
     background-size: contain;
 }
+
+.large-image-container{
+    width: 200px;
+    height: 350px;
+    background-color: lightgray;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.centered{
+    text-align: center;
+}
+.relative{
+    position: relative;
+}
+
+.absolute-center{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}

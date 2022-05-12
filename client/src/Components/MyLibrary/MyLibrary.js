@@ -60,6 +60,7 @@ function MyLibrary() {
     function handleClose() {
         setShowModal(false);
     }
+
     function handleManualModalClose(){
         setManualBookForm({
             "title" : "",
@@ -262,12 +263,12 @@ function MyLibrary() {
                     <Button variant="primary" onClick={handleStoreBooks} >Add Selected Books to Your Reading List</Button>
                 </Modal.Footer>
             </Modal>
+            
+            {/* MANUAL BOOK ENTRY MODAL */}
             <Modal show={showManualModal} onHide={handleManualModalClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Manual Book Entry:</Modal.Title>
                 </Modal.Header>
-
-                {/* MANUAL BOOK ENTRY MODAL */}
                 <Modal.Body>
                     <Form onSubmit={handleManualBookPost}>
                         <Form.Group>
@@ -290,12 +291,10 @@ function MyLibrary() {
                             <Button variant="secondary" onClick={handleManualModalClose}>Cancel</Button>
                             <Button variant="primary" type="submit" >Add Book</Button>
                         </Modal.Footer>
-                        
                     </Form>
                 </Modal.Body>
-
-                
             </Modal>
+
         </>
     )
 }
