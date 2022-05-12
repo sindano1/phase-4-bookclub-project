@@ -36,3 +36,12 @@
 .centered{
     text-align: center;
 }
+.relative{
+    position: relative;
+}
+
+.absolute-center{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}

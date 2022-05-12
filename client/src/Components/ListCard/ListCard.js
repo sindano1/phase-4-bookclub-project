@@ -22,15 +22,15 @@ function ListCard({bookObject}) {
                         <div className="image-container image-small" style={{backgroundImage: `url(${bookObject.image === "" ? 'https://visionsinmethodology.org/wp-content/uploads/2020/06/book-cover-generic.png' : bookObject.image}`}}>
                         </div>
                     </Col>
-                    <Col sm={6} md={4}>
-                        <p style={{fontSize: "20px", fontWeight: "bold"}}>{bookObject.title}</p>
+                    <Col className="relative" sm={6} md={4}>
+                        <p className="absolute-center" style={{fontSize: "20px", fontWeight: "bold"}}>{bookObject.title}</p>
                     </Col>
 
-                    <Col sm={6} md={3}>
-                        <p>By {bookObject.author}</p>
+                    <Col className="relative" sm={6} md={3}>
+                        <p className="absolute-center">By {bookObject.author}</p>
                     </Col>
-                    <Col sm={6} md={3}>
-                        <p> Genre: {bookObject.genre}</p>
+                    <Col className="relative" sm={6} md={3}>
+                        <p className="absolute-center"> Genre: {bookObject.genre}</p>
                     </Col>
                 </Row>
             </Container>
