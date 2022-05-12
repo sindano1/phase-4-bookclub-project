@@ -19,6 +19,9 @@ Rails.application.routes.draw do
 
   # Custom route to get the user's books
   get "/user-library", to: "users#show_library"
+  
+  # Custom route to get the user's clubs
+  get "/your-clubs", to: "users#your_clubs"
 
 
   # Routing logic: fallback requests for React Router.
