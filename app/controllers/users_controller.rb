@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
     def show_library
         currentUser = User.find(session[:user_id])
-        render json: currentUser.books
+        render json: currentUser.books, include: :created_at
     end
 
 private
