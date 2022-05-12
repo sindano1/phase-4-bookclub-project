@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ListCard.css";
+import Modal from 'react-bootstrap/Modal';
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 function ListCard({bookObject}) {
+    const [showEditModal, setshowEditModal] = useState(false);
+
+    function handleCloseEditModal(){
+        setshowEditModal(false);
+    }
+
     return(
         <>
-        <div className="list-card">
+        <div className="list-card" onClick={()=> setshowEditModal(true)}>
             <Container>
                 <Row>
                     <Col sm={6} md={2}>
@@ -39,6 +46,15 @@ function ListCard({bookObject}) {
             </Container>
         </div>
         <hr/>
+        {/* EDIT BOOK MODAL */}
+        <Modal show={showEditModal} onHide={handleCloseEditModal} fullscreen>
+            <Modal.Header closeButton>
+                <Modal.Title>[Book Name]</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                    
+            </Modal.Body>
+        </Modal>
         </>
     )
 }

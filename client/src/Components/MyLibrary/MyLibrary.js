@@ -27,6 +27,7 @@ function MyLibrary() {
     //One that pops up when the user chooses to manually enter a book
     const [showModal, setShowModal] = useState(false);
     const [showManualModal, setShowManualModal] = useState(false);
+    const [showEditModal, setshowEditModal] = useState(false);
 
     const [searchData, setSearchData] = useState([]);
     const [manualBookForm, setManualBookForm] = useState({
@@ -59,6 +60,10 @@ function MyLibrary() {
     //This is a function that handles showing/hiding the search results modal
     function handleClose() {
         setShowModal(false);
+    }
+
+    function handleCloseEditModal(){
+        setshowEditModal(false);
     }
     function handleManualModalClose(){
         setManualBookForm({
@@ -262,12 +267,12 @@ function MyLibrary() {
                     <Button variant="primary" onClick={handleStoreBooks} >Add Selected Books to Your Reading List</Button>
                 </Modal.Footer>
             </Modal>
+            ]
+            {/* MANUAL BOOK ENTRY MODAL */}
             <Modal show={showManualModal} onHide={handleManualModalClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Manual Book Entry:</Modal.Title>
                 </Modal.Header>
-
-                {/* MANUAL BOOK ENTRY MODAL */}
                 <Modal.Body>
                     <Form onSubmit={handleManualBookPost}>
                         <Form.Group>
@@ -290,11 +295,18 @@ function MyLibrary() {
                             <Button variant="secondary" onClick={handleManualModalClose}>Cancel</Button>
                             <Button variant="primary" type="submit" >Add Book</Button>
                         </Modal.Footer>
-                        
                     </Form>
                 </Modal.Body>
+            </Modal>
 
-                
+            {/* EDIT BOOK MODAL */}
+            <Modal show={showEditModal} onHide={handleCloseEditModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>[Book Name]</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    
+                </Modal.Body>
             </Modal>
         </>
     )

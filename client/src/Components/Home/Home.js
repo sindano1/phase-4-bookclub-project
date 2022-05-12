@@ -1,9 +1,7 @@
-import React, { useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
 import { UserContext } from "../UserContext/UserContext";
 import useLoginState from "../../CustomHooks/useLoginState";
 import "./Home.css"
-import Login from "../Login/Login";
 import DashboardContainer from "../DashboardContainer/DashboardContainer";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
@@ -15,7 +13,7 @@ function Home() {
 
     useLoginState();
 
-    const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     // const navigate = useNavigate();
     //Dashboard Content
     const dashHeader = <h1>Welcome {user.username}!</h1>
@@ -34,33 +32,18 @@ function Home() {
                        </Container>)
     const dashboardId = "home-dash"
 
-    //NavCard Content
-
+    //NAVCARD CONTENT
     //Reading List
     const readingListHeader = (<h1>My Library</h1>)
     const readingListBody = (<p>See your current and past books and reviews. Add new books. W</p>)
     const readingListButton = "Go to Your Library"
     const readingListLink = "mylibrary"
-
     //Book Clubs
     const bookClubHeader = (<h1>Book Clubs</h1>)
     const bookClubBody = (<p>View, find and join book clubs.</p>)
     const bookClubButton = "My Book Clubs"
     const bookClubLink = "book-clubs"
 
-    // useEffect(()=>{
-    //     fetch("/auth")
-    //     .then(res => {
-    //         if(res.ok){
-    //             res.json().then(user => {
-    //                 setUser(user);
-    //                 setIsLoggedIn(true);
-    //             })
-    //         }else{
-    //             navigate("login");
-    //         }
-    //     })
-    // },[setUser, setIsLoggedIn, navigate])
     
     return(
         <>

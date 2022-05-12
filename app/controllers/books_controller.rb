@@ -26,7 +26,7 @@ private
     end
 
     def book_params
-        params.permit(:title, :author, :genre, :image, :number_of_pages, :key)
+        params.permit(:title, :author, :genre, :image, :key)
     end
 
 end
