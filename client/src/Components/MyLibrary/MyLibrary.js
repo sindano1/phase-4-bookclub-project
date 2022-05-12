@@ -152,8 +152,12 @@ function MyLibrary() {
                 )
             })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(addedBook => {
+                setUserLibrary([...userLibrary, addedBook]);
+            })
             .catch(error => console.log(error.message));
+
+            setShowModal(false);
         })
         }
 
