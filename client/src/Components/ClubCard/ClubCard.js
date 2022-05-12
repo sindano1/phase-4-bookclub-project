@@ -12,6 +12,7 @@ function ClubCard({ club }) {
         <article className="club-card">
             <h2>{club.name}</h2>
             <p>Description: {club.description}</p>
+            <img className="club-image" src={club.image}/>
         </article>
     )
 }
