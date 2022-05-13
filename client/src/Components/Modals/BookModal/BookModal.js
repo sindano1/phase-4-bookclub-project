@@ -1,4 +1,5 @@
 import React from 'react';
+import "./BookModal.css"
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -30,9 +31,11 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
 
                    <Col sm={12} md={9}>
                        <Row className="info-row">
-                           <Col lg={3} style={{borderRight: "2px black solid"}}>
-                               <p><strong>My Rating: </strong></p>
-                               <p><strong>Book Status: {bookStatus(bookObject)} </strong></p>
+                           <Col lg={3} id="border-sep">
+                               {/* Add the rating here */}
+                               <p style={{fontSize : "20px", margin: "5px", padding: "10px", border: "solid black 1px"}}><span style={{fontSize : "50px", fontWeight: "bold", textAlign: "center"}}>  10</span> / 10</p>
+                               <p style={{fontStyle:"italic", textAlign: "center"}}><strong>{bookStatus(bookObject)}</strong></p>
+                               
                            </Col>
                            
                            <Col lg={9}>
