@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import StartReadingButton from "../StartReadingButton/StartReadingButton";
+import FinishReadingButton from "../FinishReadingButton/FinishReadingButton";
 
 function ListCard({bookObject, handleRemoveBookFromLibrary, userLibrary, setUserLibrary}) {
     const [showEditModal, setShowEditModal] = useState(false);
@@ -40,7 +41,8 @@ function ListCard({bookObject, handleRemoveBookFromLibrary, userLibrary, setUser
                                     <Col>
                                         {/* Conditionally Render Buttons */}
                                         {bookObject.reads[0].currently_reading ? 
-                                            <Button>Finished Reading</Button> : <StartReadingButton readsId = {readsId} userLibrary= {userLibrary} setUserLibrary={setUserLibrary} bookObject={bookObject}/>
+                                            <FinishReadingButton readsId = {readsId} userLibrary= {userLibrary} setUserLibrary={setUserLibrary} bookObject={bookObject}/>
+                                            : <StartReadingButton readsId = {readsId} userLibrary= {userLibrary} setUserLibrary={setUserLibrary} bookObject={bookObject}/>
                                         }
                                     </Col>
                                     <Col>
