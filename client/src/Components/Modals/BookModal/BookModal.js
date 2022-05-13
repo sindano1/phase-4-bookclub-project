@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { UserContext } from "../../UserContext/UserContext"
 import "./BookModal.css"
 import Modal from 'react-bootstrap/Modal';
@@ -11,16 +11,19 @@ import MoveToDeckButton from '../../MoveToDeckButton/MoveToDeckButton';
 import StartReadingButton from '../../StartReadingButton/StartReadingButton';
 import FavoriteButton from '../../FavoriteButton/FavoriteButton';
 import UnFavoriteButton from '../../FavoriteButton/UnFavoriteButton';
+import RateButton from '../../RateButton/RateButton';
+import BookRatingForm from '../../BookRatingForm/BookRatingForm';
 
 function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus, handleDeleteBook}){
     const { userLibrary, setUserLibrary } = useContext(UserContext)
+    const [isRating, setIsRating] = useState(false)
 
     const bookReads = bookObject.reads[0]
     const ratingBox = ()=>{
         if(bookReads.rating === null){
             return <p style={{fontSize : "20px", margin: "5px", padding: "10px", border: "solid black 1px", textAlign: "center"}}>No Rating</p>;    
         }else{
-            return <p style={{fontSize : "20px", margin: "5px", padding: "10px", border: "solid black 1px"}}><span style={{fontSize : "50px", fontWeight: "bold", textAlign: "center"}}>{bookObject.reads[0].rating}</span> / 10</p>
+            return <p style={{fontSize : "20px", margin: "5px", padding: "10px", border: "solid black 1px", textAlign: "center"}}><span style={{fontSize : "50px", fontWeight: "bold", textAlign: "center"}}>{bookObject.reads[0].rating}</span> / 10</p>
         }
     }
 
@@ -56,7 +59,9 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
                     <StartReadingButton readsId={bookReads.id} 
                                          userLibrary ={userLibrary} 
                                          setUserLibrary={setUserLibrary}
-                                         handleCloseEditModal={handleCloseEditModal}/>]
+                                         handleCloseEditModal={handleCloseEditModal}/>,
+                    <RateButton isRating={isRating}
+                                setIsRating={setIsRating}/>]
         }
     }
 
@@ -92,9 +97,10 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
                    <Col sm={12} md={9}>
                        <Row className="info-row">
                            <Col lg={3} id="border-sep">
+                               <p style={{textAlign: "center", marginBottom: "0", marginTop: "20px"}}>Your Rating:</p>
                                {/* Add the rating here */}
                                {ratingBox()}
-                               <p style={{textAlign: "center", marginBottom: "0", marginTop: "20px"}}>Status:</p>
+                               {isRating ? <BookRatingForm readsId={bookReads.id} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary} isRating={isRating} setIsRating={setIsRating}/>: null}
                                <p style={{fontStyle:"italic", textAlign: "center"}}><strong>{bookStatus(bookObject)}</strong></p>                               
                            </Col>
                            
@@ -105,12 +111,6 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
                                <p>My Review</p>
                                <p>My review of the book here.</p>
                            </Col>
-                       </Row>
-                       <Row>
-                           <Col>
-                               <p> All Reviews: </p>
-                           </Col>
-                           
                        </Row>
                    </Col>
                </Row>
