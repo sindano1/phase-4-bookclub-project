@@ -7,6 +7,15 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
 function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus, handleDeleteBook}){
+    const ratingBox = ()=>{
+        if(bookObject.reads[0].rating === null){
+            return <p style={{fontSize : "20px", margin: "5px", padding: "10px", border: "solid black 1px", textAlign: "center"}}>Not Rated</p>;    
+        }else{
+            return <p style={{fontSize : "20px", margin: "5px", padding: "10px", border: "solid black 1px"}}><span style={{fontSize : "50px", fontWeight: "bold", textAlign: "center"}}>{bookObject.reads[0].rating}</span> / 10</p>
+        }
+    }
+    
+
     return(
     
        <Modal className="modal-background" show={showEditModal} onHide={handleCloseEditModal} fullscreen>
@@ -33,7 +42,7 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
                        <Row className="info-row">
                            <Col lg={3} id="border-sep">
                                {/* Add the rating here */}
-                               <p style={{fontSize : "20px", margin: "5px", padding: "10px", border: "solid black 1px"}}><span style={{fontSize : "50px", fontWeight: "bold", textAlign: "center"}}>  10</span> / 10</p>
+                               {ratingBox()}
                                <p style={{fontStyle:"italic", textAlign: "center"}}><strong>{bookStatus(bookObject)}</strong></p>
                                
                            </Col>
