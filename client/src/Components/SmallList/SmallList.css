@@ -1,0 +1,12 @@
+.read-books-list{
+    margin: 10px;
+    padding: 10px;
+    border: 1px black solid;
+    background-color: black;
+    color: gold;
+    transition: all 1s;
+}
+.read-books-list:hover{
+    border: 1px solid gold;
+    cursor: pointer;
+}

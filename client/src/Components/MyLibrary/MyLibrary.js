@@ -13,6 +13,8 @@ import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import ResultsCard from '../ResultsCard/ResultsCard';
+import SmallList from "../SmallList/SmallList";
+
 
 function MyLibrary() {
     const { user, userLibrary, setUserLibrary } = useContext(UserContext);
@@ -69,7 +71,8 @@ function MyLibrary() {
         .then(res => res.json())
         .then(
             setUserLibrary(prev => prev.filter(stateObject => stateObject.reads[0].id !== bookObject.reads[0].id))
-        );
+        )
+        .catch(error => console.log(error.message))
     }
     function handleManualModalClose(){
         setManualBookForm({
@@ -193,26 +196,14 @@ function MyLibrary() {
         }
     }
 
-    let booksOnDeck = userLibrary.filter(bookObject => {
-        if (bookObject.reads[0].on_deck === true){
-            return bookObject
-        }
-    })
-    let currentlyReadingBooks = userLibrary.filter(bookObject => {
-        if (bookObject.reads[0].currently_reading === true){
-            return bookObject
-        }
-    })
+    let booksOnDeck = userLibrary.filter(bookObject => bookObject.reads[0].on_deck === true ? bookObject : false)
+    let currentlyReadingBooks = userLibrary.filter(bookObject => bookObject => bookObject.reads[0].currently_reading === true ? bookObject : false)
 
-    let readBooks = userLibrary.filter(bookObject => {
-        if (bookObject.reads[0].has_been_read === true){
-            return bookObject
-        }
-    })
+    let readBooks = userLibrary.filter(bookObject => bookObject => bookObject.reads[0].has_been_read === true ? bookObject : false)
     // At some point we will map over a user's unread books, read books and reviews
     const mappedBooksOnDeck = booksOnDeck.map(bookObject => <ListCard key={bookObject.reads[0].key} handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);
     const mappedCurrentlyReadingBooks = currentlyReadingBooks.map(bookObject => <ListCard key={bookObject.reads[0].key} handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);
-    const mappedReadBooks = readBooks.map(bookObject => <li key={bookObject.reads[0].key}><strong>{bookObject.title}</strong> by {bookObject.author}</li>)
+    const mappedReadBooks = readBooks.map(bookObject => <SmallList bookObject={bookObject}/>)
     const mappedReviews = [];
 
     return (

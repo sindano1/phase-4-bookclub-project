@@ -3,7 +3,7 @@ import { UserContext } from "../Components/UserContext/UserContext";
 
 
 function useRetrieveUserBooks(){
-    const { userLibrary, setUserLibrary} = useContext(UserContext);
+    const { setUserLibrary} = useContext(UserContext);
 
     useEffect(()=>{
         fetch("/user-library")
