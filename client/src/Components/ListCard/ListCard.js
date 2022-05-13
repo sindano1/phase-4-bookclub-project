@@ -5,32 +5,62 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
+import StartReadingButton from "../StartReadingButton/StartReadingButton";
+import FinishReadingButton from "../FinishReadingButton/FinishReadingButton";
+import BookModal from "../Modals/BookModal/BookModal";
 
-function ListCard({bookObject}) {
-    const [showEditModal, setshowEditModal] = useState(false);
+
+function ListCard({bookObject, handleRemoveBookFromLibrary, userLibrary, setUserLibrary}) {
+    const [showEditModal, setShowEditModal] = useState(false);
+
+    const readsId = bookObject.reads[0].id;
+    const bookStatus = (bookObject) => {
+        if(bookObject.reads[0].currently_reading === true){
+            return "Currently Reading"
+        }else if (bookObject.reads[0].on_deck === true){
+            return "On Deck"
+        }else if (bookObject.reads[0].has_been_read === true ){
+            return "Read"
+        }
+    }
 
     function handleCloseEditModal(){
-        setshowEditModal(false);
+        setShowEditModal(false);
     }
+    function handleDeleteBook(){
+        console.log(bookObject.reads[0].id)
+        handleRemoveBookFromLibrary(bookObject);
+        handleCloseEditModal();
+    }
+ 
 
     return(
         <>
-        <div className="list-card" onClick={()=> setshowEditModal(true)}>
+        <div className="list-card" onClick={()=> setShowEditModal(true)}>
             <Container>
                 <Row>
-                    <Col sm={6} md={2}>
+                    <Col sm={12} md={3}>
                         <div className="image-container image-small" style={{backgroundImage: `url(${bookObject.image === "" ? 'https://visionsinmethodology.org/wp-content/uploads/2020/06/book-cover-generic.png' : bookObject.image}`}}>
                         </div>
                     </Col>
-                    <Col className="relative" sm={6} md={4}>
-                        <p className="absolute-center" style={{fontSize: "20px", fontWeight: "bold"}}>{bookObject.title}</p>
-                    </Col>
-
-                    <Col className="relative" sm={6} md={3}>
-                        <p className="absolute-center">By {bookObject.author}</p>
-                    </Col>
-                    <Col className="relative" sm={6} md={3}>
-                        <p className="absolute-center"> Genre: {bookObject.genre}</p>
+                    <Col sm={12} md={9}>
+                        <div>
+                            <p style={{fontSize: "20px", fontWeight: "bold"}}>{bookObject.title}</p>
+                            <p>By {bookObject.author}</p>
+                            <Container>
+                                <Row>
+                                    <Col>
+                                        {/* Conditionally Render Buttons */}
+                                        {bookObject.reads[0].currently_reading ? 
+                                            <FinishReadingButton readsId = {readsId} userLibrary= {userLibrary} setUserLibrary={setUserLibrary} bookObject={bookObject}/>
+                                            : <StartReadingButton readsId = {readsId} userLibrary= {userLibrary} setUserLibrary={setUserLibrary} bookObject={bookObject}/>
+                                        }
+                                    </Col>
+                                    <Col>
+                                    </Col>
+                                </Row>
+                            </Container>
+                        </div>
                     </Col>
                 </Row>
             </Container>
@@ -47,60 +77,12 @@ function ListCard({bookObject}) {
             </Container>
         </div>
         <hr/>
-
-        {/* EDIT BOOK MODAL */}
-        <Modal className="modal-background" show={showEditModal} onHide={handleCloseEditModal} fullscreen>
-            <Modal.Header closeButton>
-                <Modal.Title><strong style={{fontSize: "40px"}}>{bookObject.title}</strong> by {bookObject.author}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Container className="book-modal-container">
-                    <Row>
-                        <Col className="create-update">
-                            <p><strong>Added on: {bookObject.created_at}</strong></p>
-                        </Col>
-                        <Col className="create-update">
-                            <p><strong>Updated on: {bookObject.updated_at}</strong></p>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col sm={12} md={3}>
-                            <div className="large-image-container" style={{backgroundImage: `url(${bookObject.image === "" ? 'https://visionsinmethodology.org/wp-content/uploads/2020/06/book-cover-generic.png' : bookObject.image}`}}>
-                            </div>
-                        </Col>
-
-                        <Col sm={12} md={9}>
-                            <Row className="info-row">
-                                <Col lg={3} style={{borderRight: "2px black solid"}}>
-                                    <p><strong>My Rating: </strong></p>
-                                    <p><strong>Book Status: </strong></p>
-                                </Col>
-                                
-                                <Col lg={9}>
-                                    <p>Books Summary:</p>
-                                    <p>Some book summary here.</p>
-                                    
-                                    <p>My Review</p>
-                                    <p>My review of the book here.</p>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <p> All Reviews: </p>
-                                </Col>
-                                
-                            </Row>
-                        </Col>
-                    </Row>
-                </Container>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="primary">Begin Reading/Finish Reading</Button>
-                <Button variant="warning">Mark as Favorite</Button>
-                <Button variant="danger">Remove from My Library</Button>
-                <Button variant="secondary">Cancel</Button>
-            </Modal.Footer>
-        </Modal>
+        <BookModal showEditModal={showEditModal} 
+                   setShowEditModal={setShowEditModal}
+                   bookObject={bookObject}
+                   bookStatus = {bookStatus}
+                   handleDeleteBook={handleDeleteBook}
+                   handleCloseEditModal={handleCloseEditModal}/>
         </>
     )
 }

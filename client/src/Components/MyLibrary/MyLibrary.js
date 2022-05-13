@@ -13,11 +13,12 @@ import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import ResultsCard from '../ResultsCard/ResultsCard';
+import SmallList from "../SmallList/SmallList";
+
 
 function MyLibrary() {
     const { user, userLibrary, setUserLibrary } = useContext(UserContext);
-
-    //Retrieve user if logged in
+        //Retrieve user if logged in
     useLoginState();
     //Retrieve a user's books if logged in
     useRetrieveUserBooks();
@@ -60,7 +61,19 @@ function MyLibrary() {
     function handleClose() {
         setShowModal(false);
     }
+    function handleRemoveBookFromLibrary(bookObject){
+        console.log(bookObject.reads[0].id)
 
+        const configObj = {
+            method : "DELETE"
+        }
+        fetch(`/reads/${bookObject.reads[0].id}`, configObj)
+        .then(res => res.json())
+        .then(
+            setUserLibrary(prev => prev.filter(stateObject => stateObject.reads[0].id !== bookObject.reads[0].id))
+        )
+        .catch(error => console.log(error.message))
+    }
     function handleManualModalClose(){
         setManualBookForm({
             "title" : "",
@@ -183,11 +196,14 @@ function MyLibrary() {
         }
     }
 
+    let booksOnDeck = userLibrary.filter(bookObject => bookObject.reads[0].on_deck === true ? bookObject : false)
+    let currentlyReadingBooks = userLibrary.filter(bookObject => bookObject => bookObject.reads[0].currently_reading === true ? bookObject : false)
 
+    let readBooks = userLibrary.filter(bookObject => bookObject => bookObject.reads[0].has_been_read === true ? bookObject : false)
     // At some point we will map over a user's unread books, read books and reviews
-    const mappedUnreadBooks = userLibrary.map(bookObject => <ListCard bookObject={bookObject} />);
-    const mappedCurrentlyReadingBooks = [];
-    const mappedReadBooks = [];
+    const mappedBooksOnDeck = booksOnDeck.map(bookObject => <ListCard key={bookObject.reads[0].key} handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);
+    const mappedCurrentlyReadingBooks = currentlyReadingBooks.map(bookObject => <ListCard key={bookObject.reads[0].key} handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);
+    const mappedReadBooks = readBooks.map(bookObject => <SmallList bookObject={bookObject}/>)
     const mappedReviews = [];
 
     return (
@@ -208,14 +224,14 @@ function MyLibrary() {
                                     <header>
                                         <h4>Currently Reading</h4>
                                     </header>
-                                    {mappedCurrentlyReadingBooks.length === 0 ? <p className="empty-array=msg">You are not currently reading any books.</p> : <ol>{mappedCurrentlyReadingBooks}</ol>}
+                                    {mappedCurrentlyReadingBooks.length === 0 ? <p className="empty-array-msg">You are not currently reading any books.</p> : <ol>{mappedCurrentlyReadingBooks}</ol>}
                                 </section>
                                 <hr />
                                 <header>
                                     <h4>On Deck</h4>
                                 </header>
                                 <section>
-                                    {mappedUnreadBooks.length === 0 ? <p className="empty-array-msg">You have no books in your reading list.</p> : <ol>{mappedUnreadBooks}</ol>}
+                                    {mappedBooksOnDeck.length === 0 ? <p className="empty-array-msg">You have no books in your reading list.</p> : <ol>{mappedBooksOnDeck}</ol>}
                                 </section>
                             </section>
 
@@ -231,7 +247,7 @@ function MyLibrary() {
                             <hr />
                             <section>
                                 <header>
-                                    <h4>Recently Read</h4>
+                                    <h4>Read Books</h4>
                                 </header>
                                 <hr />
                                 {mappedReadBooks.length === 0 ? <p className="empty-array-msg">You haven't read any books.</p> : <ol>{mappedReadBooks}</ol>}

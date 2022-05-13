@@ -33,7 +33,7 @@ function BookClub() {
                 return (
                     <>
                     <p>You are not currently part of any clubs</p>
-                    <p>Join a book club!</p>
+                    <p>Join a book club! Or Create one!</p>
                     </>
                 )
             }else{

@@ -1,0 +1,7 @@
+#border-sep{
+    border-right: 2px black solid;
+    transition: all 0.7s;
+}
+#border-sep:hover{
+    border-right: 4px #8C0000 solid;
+}
