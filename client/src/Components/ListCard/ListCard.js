@@ -24,19 +24,17 @@ function ListCard({bookObject, handleRemoveBookFromLibrary}) {
         <div className="list-card" onClick={()=> setShowEditModal(true)}>
             <Container>
                 <Row>
-                    <Col sm={6} md={2}>
+                    <Col sm={12} md={3}>
                         <div className="image-container image-small" style={{backgroundImage: `url(${bookObject.image === "" ? 'https://visionsinmethodology.org/wp-content/uploads/2020/06/book-cover-generic.png' : bookObject.image}`}}>
                         </div>
                     </Col>
-                    <Col className="relative" sm={6} md={4}>
-                        <p className="absolute-center" style={{fontSize: "20px", fontWeight: "bold"}}>{bookObject.title}</p>
-                    </Col>
-
-                    <Col className="relative" sm={6} md={3}>
-                        <p className="absolute-center">By {bookObject.author}</p>
-                    </Col>
-                    <Col className="relative" sm={6} md={3}>
-                        <p className="absolute-center"> Genre: {bookObject.genre}</p>
+                    <Col sm={12} md={9}>
+                        <Col className="relative" >
+                            <p style={{fontSize: "20px", fontWeight: "bold"}}>{bookObject.title}</p>
+                        </Col>
+                        <Col className="relative">
+                            <p>By {bookObject.author}</p>
+                        </Col>
                     </Col>
                 </Row>
             </Container>
