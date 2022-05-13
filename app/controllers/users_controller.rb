@@ -73,7 +73,7 @@ private
     end
 
     def user_params
-        params.permit(:username, :password, :first_name, :last_name, :birthday)
+        params.permit(:username, :password, :first_name, :last_name, :birthday, :new_username, :new_password)
     #can a user assign their own default club id?
     end
 
