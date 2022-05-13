@@ -17,8 +17,8 @@ function ListCard({bookObject, handleRemoveBookFromLibrary, userLibrary, setUser
         setShowEditModal(false);
     }
     function handleDeleteBook(){
-        const readsId =  bookObject.reads[0].id;
-        handleRemoveBookFromLibrary(bookObject, readsId);
+        console.log(bookObject.reads[0].id)
+        handleRemoveBookFromLibrary(bookObject);
         handleCloseEditModal();
     }
  

@@ -11,13 +11,14 @@ function StartReadingButton({readsId, userLibrary, setUserLibrary, bookObject}){
             },
             body: JSON.stringify({
                 currently_reading : true,
+                on_deck : false
             })
         }
         fetch(`/reads/${readsId}`, configObj)
         .then(res => res.json())
         .then(()=>setUserLibrary(userLibrary.map(book => {
             if(book.reads[0].id === readsId){
-                const updatedReads = {...book.reads[0], currently_reading : true}
+                const updatedReads = {...book.reads[0], currently_reading : true, on_deck : false}
                 const updatedBookOjbect = {
                     ...book, reads : [updatedReads]
                 }

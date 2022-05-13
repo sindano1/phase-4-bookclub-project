@@ -59,18 +59,16 @@ function MyLibrary() {
     function handleClose() {
         setShowModal(false);
     }
-    function handleRemoveBookFromLibrary(bookObject, readsId){
+    function handleRemoveBookFromLibrary(bookObject){
+        console.log(bookObject.reads[0].id)
 
         const configObj = {
             method : "DELETE"
         }
-       
-        fetch(`/reads/${readsId}`, configObj)
+        fetch(`/reads/${bookObject.reads[0].id}`, configObj)
         .then(res => res.json())
         .then(
-
-            setUserLibrary(prev => prev.filter(stateObject => stateObject.reads[0].id !== readsId))
-            
+            setUserLibrary(prev => prev.filter(stateObject => stateObject.reads[0].id !== bookObject.reads[0].id))
         );
     }
     function handleManualModalClose(){
@@ -195,10 +193,19 @@ function MyLibrary() {
         }
     }
 
-
+    let booksOnDeck = userLibrary.filter(bookObject => {
+        if (bookObject.reads[0].on_deck){
+            return bookObject
+        }
+    })
+    let currentlyReadingBooks = userLibrary.filter(bookObject => {
+        if (bookObject.reads[0].currently_reading){
+            return bookObject
+        }
+    })
     // At some point we will map over a user's unread books, read books and reviews
-    const mappedUnreadBooks = userLibrary.map(bookObject => <ListCard handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);
-    const mappedCurrentlyReadingBooks = [];
+    const mappedBooksOnDeck = booksOnDeck.map(bookObject => <ListCard key={bookObject.reads[0].key} handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);
+    const mappedCurrentlyReadingBooks = currentlyReadingBooks.map(bookObject => <ListCard key={bookObject.reads[0].key} handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);;
     const mappedReadBooks = [];
     const mappedReviews = [];
 
@@ -220,14 +227,14 @@ function MyLibrary() {
                                     <header>
                                         <h4>Currently Reading</h4>
                                     </header>
-                                    {mappedCurrentlyReadingBooks.length === 0 ? <p className="empty-array=msg">You are not currently reading any books.</p> : <ol>{mappedCurrentlyReadingBooks}</ol>}
+                                    {mappedCurrentlyReadingBooks.length === 0 ? <p className="empty-array-msg">You are not currently reading any books.</p> : <ol>{mappedCurrentlyReadingBooks}</ol>}
                                 </section>
                                 <hr />
                                 <header>
                                     <h4>On Deck</h4>
                                 </header>
                                 <section>
-                                    {mappedUnreadBooks.length === 0 ? <p className="empty-array-msg">You have no books in your reading list.</p> : <ol>{mappedUnreadBooks}</ol>}
+                                    {mappedBooksOnDeck.length === 0 ? <p className="empty-array-msg">You have no books in your reading list.</p> : <ol>{mappedBooksOnDeck}</ol>}
                                 </section>
                             </section>
 
