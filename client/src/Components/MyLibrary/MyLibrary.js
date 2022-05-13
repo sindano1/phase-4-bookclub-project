@@ -203,10 +203,16 @@ function MyLibrary() {
             return bookObject
         }
     })
+
+    let readBooks = userLibrary.filter(bookObject => {
+        if (bookObject.reads[0].has_been_read){
+            return bookObject
+        }
+    })
     // At some point we will map over a user's unread books, read books and reviews
     const mappedBooksOnDeck = booksOnDeck.map(bookObject => <ListCard key={bookObject.reads[0].key} handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);
-    const mappedCurrentlyReadingBooks = currentlyReadingBooks.map(bookObject => <ListCard key={bookObject.reads[0].key} handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);;
-    const mappedReadBooks = [];
+    const mappedCurrentlyReadingBooks = currentlyReadingBooks.map(bookObject => <ListCard key={bookObject.reads[0].key} handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);
+    const mappedReadBooks = readBooks.map(bookObject => <li><strong>{bookObject.title}</strong> by {bookObject.author}</li>)
     const mappedReviews = [];
 
     return (
@@ -250,7 +256,7 @@ function MyLibrary() {
                             <hr />
                             <section>
                                 <header>
-                                    <h4>Recently Read</h4>
+                                    <h4>Read Books</h4>
                                 </header>
                                 <hr />
                                 {mappedReadBooks.length === 0 ? <p className="empty-array-msg">You haven't read any books.</p> : <ol>{mappedReadBooks}</ol>}
