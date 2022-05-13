@@ -7,15 +7,32 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
 function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus, handleDeleteBook}){
+    const bookReads = bookObject.reads[0]
     const ratingBox = ()=>{
-        if(bookObject.reads[0].rating === null){
-            return <p style={{fontSize : "20px", margin: "5px", padding: "10px", border: "solid black 1px", textAlign: "center"}}>Not Rated</p>;    
+        if(bookReads.rating === null){
+            return <p style={{fontSize : "20px", margin: "5px", padding: "10px", border: "solid black 1px", textAlign: "center"}}>No Rating</p>;    
         }else{
             return <p style={{fontSize : "20px", margin: "5px", padding: "10px", border: "solid black 1px"}}><span style={{fontSize : "50px", fontWeight: "bold", textAlign: "center"}}>{bookObject.reads[0].rating}</span> / 10</p>
         }
     }
-    
 
+    const buttonsArray = ()=>{
+        //Depending on the book status, we want to render a different menu of buttons
+        //Cancel, Remove, Favorite, Rate & Review from Library will always be there
+        //CurrentlyReading: Move back on Deck, Finish reading
+        //On Deck: Start Reading
+        //Has been read: Move back on Deck, Start Over (move to currently reading)
+        if(bookReads.on_deck){
+            return [<Button>Start Reading</Button>]
+        }else if(bookReads.currently_reading){
+            return [<Button>Move to On Deck</Button>, <Button>Mark as Finished</Button>]
+        }else if(bookReads.has_been_read && !bookReads.on_deck && !bookReads.currently_reading){
+            return [<Button>Move to On Deck</Button>, <Button>Start Reading Again</Button>]
+        }
+    }
+
+    const mappedButtonsArray = buttonsArray().map(button=><span>{button}</span>)
+    
     return(
     
        <Modal className="modal-background" show={showEditModal} onHide={handleCloseEditModal} fullscreen>
@@ -43,6 +60,7 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
                            <Col lg={3} id="border-sep">
                                {/* Add the rating here */}
                                {ratingBox()}
+                               <p style={{textAlign: "center", marginBottom: "0", marginTop: "20px"}}>Status:</p>
                                <p style={{fontStyle:"italic", textAlign: "center"}}><strong>{bookStatus(bookObject)}</strong></p>
                                
                            </Col>
@@ -66,7 +84,7 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
            </Container>
        </Modal.Body>
        <Modal.Footer>
-                <Button variant="primary">Begin Reading/Finish Reading</Button>
+                {mappedButtonsArray}
                 <Button variant="warning">Favorite</Button>
                 <Button variant="danger" onClick={handleDeleteBook}>Remove from My Library</Button>
                 <Button variant="secondary" onClick={() => handleCloseEditModal()}>Cancel</Button>
