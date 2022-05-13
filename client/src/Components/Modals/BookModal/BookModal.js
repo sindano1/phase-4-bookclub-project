@@ -23,7 +23,7 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
         if(bookReads.rating === null){
             return <p style={{fontSize : "20px", margin: "5px", padding: "10px", border: "solid black 1px", textAlign: "center"}}>No Rating</p>;    
         }else{
-            return <p style={{fontSize : "20px", margin: "5px", padding: "10px", border: "solid black 1px"}}><span style={{fontSize : "50px", fontWeight: "bold", textAlign: "center"}}>{bookObject.reads[0].rating}</span> / 10</p>
+            return <p style={{fontSize : "20px", margin: "5px", padding: "10px", border: "solid black 1px", textAlign: "center"}}><span style={{fontSize : "50px", fontWeight: "bold", textAlign: "center"}}>{bookObject.reads[0].rating}</span> / 10</p>
         }
     }
 
@@ -97,10 +97,10 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
                    <Col sm={12} md={9}>
                        <Row className="info-row">
                            <Col lg={3} id="border-sep">
+                               <p style={{textAlign: "center", marginBottom: "0", marginTop: "20px"}}>Your Rating:</p>
                                {/* Add the rating here */}
                                {ratingBox()}
                                {isRating ? <BookRatingForm readsId={bookReads.id} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary} isRating={isRating} setIsRating={setIsRating}/>: null}
-                               <p style={{textAlign: "center", marginBottom: "0", marginTop: "20px"}}>Status:</p>
                                <p style={{fontStyle:"italic", textAlign: "center"}}><strong>{bookStatus(bookObject)}</strong></p>                               
                            </Col>
                            
@@ -111,12 +111,6 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
                                <p>My Review</p>
                                <p>My review of the book here.</p>
                            </Col>
-                       </Row>
-                       <Row>
-                           <Col>
-                               <p> All Reviews: </p>
-                           </Col>
-                           
                        </Row>
                    </Col>
                </Row>
