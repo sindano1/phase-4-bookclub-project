@@ -197,7 +197,7 @@ function MyLibrary() {
 
 
     // At some point we will map over a user's unread books, read books and reviews
-    const mappedUnreadBooks = userLibrary.map(bookObject => <ListCard handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} />);
+    const mappedUnreadBooks = userLibrary.map(bookObject => <ListCard handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);
     const mappedCurrentlyReadingBooks = [];
     const mappedReadBooks = [];
     const mappedReviews = [];
