@@ -91,7 +91,7 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
                                {ratingBox()}
                                <p style={{textAlign: "center", marginBottom: "0", marginTop: "20px"}}>Status:</p>
                                <p style={{fontStyle:"italic", textAlign: "center"}}><strong>{bookStatus(bookObject)}</strong></p>
-                               {bookReads.is_favorite === true ? <p>FAVORITE</p> : <p>NOT FAVORITE</p>}
+                               {bookReads.is_favorite === true ? <img src={require("../../Images/ar.png")} alt="favorite"/> : <p>NOT FAVORITE</p>}
                                
                            </Col>
                            
