@@ -199,11 +199,12 @@ function MyLibrary() {
     let booksOnDeck = userLibrary.filter(bookObject => bookObject.reads[0].on_deck === true ? bookObject : false)
     let currentlyReadingBooks = userLibrary.filter(bookObject => bookObject.reads[0].currently_reading === true ? bookObject : false)
     let readBooks = userLibrary.filter(bookObject => bookObject.reads[0].has_been_read === true ? bookObject : false)
+    let favoriteBooks = userLibrary.filter(bookObject => bookObject.reads[0].is_favorite === true ? bookObject : false)
     // At some point we will map over a user's unread books, read books and reviews
     const mappedBooksOnDeck = booksOnDeck.map(bookObject => <ListCard key={bookObject.reads[0].key} handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);
     const mappedCurrentlyReadingBooks = currentlyReadingBooks.map(bookObject => <ListCard key={bookObject.reads[0].key} handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);
     const mappedReadBooks = readBooks.map(bookObject => <SmallList bookObject={bookObject}/>)
-    const mappedReviews = [];
+    const mappedFavorites = favoriteBooks.map(bookObject => <SmallList bookObject={bookObject}/>);
 
     return (
         <>
@@ -239,7 +240,7 @@ function MyLibrary() {
                     <Col sm={12} md={4}>
                         <section className="content-list border" id="past-book-reviews">
                             <header>
-                                <h3><strong>Past Books and Reviews</strong></h3>
+                                <h3><strong>Past Books and Favorites</strong></h3>
                                 {/* Build a new page for this. Currently linking to home */}
                                 <Link to="/">See All</Link>
                             </header>
@@ -253,10 +254,10 @@ function MyLibrary() {
                             </section>
                             <section>
                                 <header>
-                                    <h4>Recent Reviews</h4>
+                                    <h4>Favorites</h4>
                                 </header>
                                 <hr />
-                                {mappedReviews.length === 0 ? <p className="empty-array-msg">You haven't written any reviews.</p> : <ol>{mappedReviews}</ol>}
+                                {mappedFavorites.length === 0 ? <p className="empty-array-msg">You don't have any favorites.</p> : <ol>{mappedFavorites}</ol>}
                             </section>
                         </section>
                     </Col>
