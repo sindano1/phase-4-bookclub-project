@@ -12,6 +12,15 @@ function ListCard({bookObject, handleRemoveBookFromLibrary, userLibrary, setUser
     const [showEditModal, setShowEditModal] = useState(false);
 
     const readsId = bookObject.reads[0].id;
+    const bookStatus = (bookObject) => {
+        if(bookObject.reads[0].currently_reading === true){
+            return "Currently Reading"
+        }else if (bookObject.reads[0].on_deck === true){
+            return "On Deck"
+        }else if (bookObject.reads[0].has_been_read === true ){
+            return "Read"
+        }
+    }
 
     function handleCloseEditModal(){
         setShowEditModal(false);
@@ -92,7 +101,7 @@ function ListCard({bookObject, handleRemoveBookFromLibrary, userLibrary, setUser
                             <Row className="info-row">
                                 <Col lg={3} style={{borderRight: "2px black solid"}}>
                                     <p><strong>My Rating: </strong></p>
-                                    <p><strong>Book Status: </strong></p>
+                                    <p><strong>Book Status: {bookStatus(bookObject)} </strong></p>
                                 </Col>
                                 
                                 <Col lg={9}>
