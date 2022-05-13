@@ -9,6 +9,8 @@ import Button from 'react-bootstrap/Button';
 import FinishReadingButton from '../../FinishReadingButton/FinishReadingButton';
 import MoveToDeckButton from '../../MoveToDeckButton/MoveToDeckButton';
 import StartReadingButton from '../../StartReadingButton/StartReadingButton';
+import FavoriteButton from '../../FavoriteButton/FavoriteButton';
+import UnFavoriteButton from '../../FavoriteButton/UnFavoriteButton';
 
 function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus, handleDeleteBook}){
     const { userLibrary, setUserLibrary } = useContext(UserContext)
@@ -89,6 +91,7 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
                                {ratingBox()}
                                <p style={{textAlign: "center", marginBottom: "0", marginTop: "20px"}}>Status:</p>
                                <p style={{fontStyle:"italic", textAlign: "center"}}><strong>{bookStatus(bookObject)}</strong></p>
+                               {bookReads.is_favorite === true ? <p>FAVORITE</p> : <p>NOT FAVORITE</p>}
                                
                            </Col>
                            
@@ -112,7 +115,11 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
        </Modal.Body>
        <Modal.Footer>
                 {mappedButtonsArray}
-                <Button variant="warning">Favorite</Button>
+                {bookReads.is_favorite === true ? <UnFavoriteButton readsId={bookReads.id} 
+                                         userLibrary ={userLibrary} 
+                                         setUserLibrary={setUserLibrary}/> : <FavoriteButton readsId={bookReads.id} 
+                                                                                               userLibrary ={userLibrary} 
+                                                                                               setUserLibrary={setUserLibrary}/>}
                 <Button variant="danger" onClick={handleDeleteBook}>Remove from My Library</Button>
                 <Button variant="secondary" onClick={() => handleCloseEditModal()}>Cancel</Button>
 
