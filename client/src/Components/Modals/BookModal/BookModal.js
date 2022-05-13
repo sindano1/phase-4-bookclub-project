@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from "../../UserContext/UserContext"
 import "./BookModal.css"
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import FinishReadingButton from '../../FinishReadingButton/FinishReadingButton';
+import MoveToDeckButton from '../../MoveToDeckButton/MoveToDeckButton';
+import StartReadingButton from '../../StartReadingButton/StartReadingButton';
 
 function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus, handleDeleteBook}){
+    const { userLibrary, setUserLibrary } = useContext(UserContext)
+
     const bookReads = bookObject.reads[0]
     const ratingBox = ()=>{
         if(bookReads.rating === null){
@@ -23,15 +29,36 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
         //On Deck: Start Reading
         //Has been read: Move back on Deck, Start Over (move to currently reading)
         if(bookReads.on_deck){
-            return [<Button>Start Reading</Button>]
+
+            return [<StartReadingButton readsId={bookReads.id} 
+                                        userLibrary ={userLibrary} 
+                                        setUserLibrary={setUserLibrary}
+                                        handleCloseEditModal={handleCloseEditModal}/>]
+
         }else if(bookReads.currently_reading){
-            return [<Button>Move to On Deck</Button>, <Button>Mark as Finished</Button>]
+
+            return [<MoveToDeckButton readsId={bookReads.id}
+                            userLibrary={userLibrary}
+                            setUserLibrary={setUserLibrary}
+                            handleCloseEditModal={handleCloseEditModal}/>, 
+                    <FinishReadingButton readsId={bookReads.id} 
+                                         userLibrary ={userLibrary} 
+                                         setUserLibrary={setUserLibrary}
+                                         handleCloseEditModal={handleCloseEditModal}/>]
+
         }else if(bookReads.has_been_read && !bookReads.on_deck && !bookReads.currently_reading){
-            return [<Button>Move to On Deck</Button>, <Button>Start Reading Again</Button>]
+            return [<MoveToDeckButton readsId={bookReads.id}
+                                      userLibrary={userLibrary}
+                                      setUserLibrary={setUserLibrary}
+                                      handleCloseEditModal={handleCloseEditModal}/>,
+                    <StartReadingButton readsId={bookReads.id} 
+                                         userLibrary ={userLibrary} 
+                                         setUserLibrary={setUserLibrary}
+                                         handleCloseEditModal={handleCloseEditModal}/>]
         }
     }
 
-    const mappedButtonsArray = buttonsArray().map(button=><span>{button}</span>)
+    const mappedButtonsArray = buttonsArray().map((button, index)=>{return <span key={index}>{button}</span>})
     
     return(
     

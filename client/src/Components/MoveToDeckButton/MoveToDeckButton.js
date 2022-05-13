@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 
-function FinishReadingButton({readsId, userLibrary, setUserLibrary, handleCloseEditModal}){
-    function handleStartReading(e){
+function MoveToDeckButton({readsId, userLibrary, setUserLibrary, handleCloseEditModal}){
+    function handleMoveToDeck(e){
         e.stopPropagation();
         const configObj = {
             method: "PATCH",
@@ -10,7 +10,7 @@ function FinishReadingButton({readsId, userLibrary, setUserLibrary, handleCloseE
                 "Accepted" : "application/json"
             },
             body: JSON.stringify({
-                has_been_read : true,
+                on_deck : true,
                 currently_reading : false
             })
         }
@@ -19,7 +19,7 @@ function FinishReadingButton({readsId, userLibrary, setUserLibrary, handleCloseE
         .then(()=>{
             setUserLibrary(userLibrary.map(book => {
                 if(book.reads[0].id === readsId){
-                    const updatedReads = {...book.reads[0], has_been_read : true, currently_reading : false}
+                    const updatedReads = {...book.reads[0], currently_reading : false, on_deck : true}
                     const updatedBookOjbect = {
                         ...book, reads : [updatedReads]
                     }
@@ -29,15 +29,17 @@ function FinishReadingButton({readsId, userLibrary, setUserLibrary, handleCloseE
                 }
             }
         ))
+
         if(handleCloseEditModal !== undefined){
             console.log(handleCloseEditModal);
             handleCloseEditModal();
         }
+        
     })
     }
     return(
-        <Button onClick={handleStartReading}>Mark as Finished</Button>
+        <Button onClick={handleMoveToDeck}>Move to On Deck</Button>
     )
 }
 
-export default FinishReadingButton;
+export default MoveToDeckButton;
