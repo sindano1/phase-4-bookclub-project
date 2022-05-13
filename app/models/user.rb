@@ -7,6 +7,9 @@ class User < ApplicationRecord
 
     has_secure_password
 
+    alias_attribute :new_username, :username
+    alias_attribute :new_password, :password
+
     # validates :username, :password, presence: true
     # # need password validations
     # validates :username, :uniqueness, true
