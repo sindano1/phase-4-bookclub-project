@@ -241,8 +241,6 @@ function MyLibrary() {
                         <section className="content-list border" id="past-book-reviews">
                             <header>
                                 <h3><strong>Past Books and Favorites</strong></h3>
-                                {/* Build a new page for this. Currently linking to home */}
-                                <Link to="/">See All</Link>
                             </header>
                             <hr />
                             <section>
