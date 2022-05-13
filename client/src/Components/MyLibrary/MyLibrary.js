@@ -16,8 +16,7 @@ import ResultsCard from '../ResultsCard/ResultsCard';
 
 function MyLibrary() {
     const { user, userLibrary, setUserLibrary } = useContext(UserContext);
-
-    //Retrieve user if logged in
+        //Retrieve user if logged in
     useLoginState();
     //Retrieve a user's books if logged in
     useRetrieveUserBooks();
@@ -60,7 +59,20 @@ function MyLibrary() {
     function handleClose() {
         setShowModal(false);
     }
+    function handleRemoveBookFromLibrary(bookObject, readsId){
 
+        const configObj = {
+            method : "DELETE"
+        }
+       
+        fetch(`/reads/${readsId}`, configObj)
+        .then(res => res.json())
+        .then(
+
+            setUserLibrary(prev => prev.filter(stateObject => stateObject.reads[0].id !== readsId))
+            
+        );
+    }
     function handleManualModalClose(){
         setManualBookForm({
             "title" : "",
@@ -185,7 +197,7 @@ function MyLibrary() {
 
 
     // At some point we will map over a user's unread books, read books and reviews
-    const mappedUnreadBooks = userLibrary.map(bookObject => <ListCard bookObject={bookObject} />);
+    const mappedUnreadBooks = userLibrary.map(bookObject => <ListCard handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} />);
     const mappedCurrentlyReadingBooks = [];
     const mappedReadBooks = [];
     const mappedReviews = [];

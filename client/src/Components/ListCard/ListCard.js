@@ -6,16 +6,22 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 
-function ListCard({bookObject}) {
-    const [showEditModal, setshowEditModal] = useState(false);
+function ListCard({bookObject, handleRemoveBookFromLibrary}) {
+    const [showEditModal, setShowEditModal] = useState(false);
 
     function handleCloseEditModal(){
-        setshowEditModal(false);
+        setShowEditModal(false);
     }
+    function handleDeleteBook(){
+        const readsId =  bookObject.reads[0].id;
+        handleRemoveBookFromLibrary(bookObject, readsId);
+        handleCloseEditModal();
+    }
+ 
 
     return(
         <>
-        <div className="list-card" onClick={()=> setshowEditModal(true)}>
+        <div className="list-card" onClick={()=> setShowEditModal(true)}>
             <Container>
                 <Row>
                     <Col sm={6} md={2}>
@@ -95,11 +101,14 @@ function ListCard({bookObject}) {
                 </Container>
             </Modal.Body>
             <Modal.Footer>
+
                 <Button variant="primary">Begin Reading/Finish Reading</Button>
-                <Button variant="warning">Mark as Favorite</Button>
-                <Button variant="danger">Remove from My Library</Button>
-                <Button variant="secondary">Cancel</Button>
+                <Button variant="warning">Favorite</Button>
+                <Button variant="danger" onClick={handleDeleteBook}>Remove from My Library</Button>
+                <Button variant="secondary" onClick={() => handleCloseEditModal()}>Cancel</Button>
+
             </Modal.Footer>
+            
         </Modal>
         </>
     )
