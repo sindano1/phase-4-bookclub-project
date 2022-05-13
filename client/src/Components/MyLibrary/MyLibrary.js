@@ -197,9 +197,8 @@ function MyLibrary() {
     }
 
     let booksOnDeck = userLibrary.filter(bookObject => bookObject.reads[0].on_deck === true ? bookObject : false)
-    let currentlyReadingBooks = userLibrary.filter(bookObject => bookObject => bookObject.reads[0].currently_reading === true ? bookObject : false)
-
-    let readBooks = userLibrary.filter(bookObject => bookObject => bookObject.reads[0].has_been_read === true ? bookObject : false)
+    let currentlyReadingBooks = userLibrary.filter(bookObject => bookObject.reads[0].currently_reading === true ? bookObject : false)
+    let readBooks = userLibrary.filter(bookObject => bookObject.reads[0].has_been_read === true ? bookObject : false)
     // At some point we will map over a user's unread books, read books and reviews
     const mappedBooksOnDeck = booksOnDeck.map(bookObject => <ListCard key={bookObject.reads[0].key} handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);
     const mappedCurrentlyReadingBooks = currentlyReadingBooks.map(bookObject => <ListCard key={bookObject.reads[0].key} handleRemoveBookFromLibrary={handleRemoveBookFromLibrary} bookObject={bookObject} userLibrary={userLibrary} setUserLibrary={setUserLibrary}/>);
