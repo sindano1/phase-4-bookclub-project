@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 
-function FinishReadingButton({readsId, userLibrary, setUserLibrary, handleCloseEditModal}){
-    function handleStartReading(e){
+function FavoriteButton({readsId, userLibrary, setUserLibrary}){
+    function markAsFavorite(e){
         e.stopPropagation();
         const configObj = {
             method: "PATCH",
@@ -10,8 +10,7 @@ function FinishReadingButton({readsId, userLibrary, setUserLibrary, handleCloseE
                 "Accepted" : "application/json"
             },
             body: JSON.stringify({
-                has_been_read : true,
-                currently_reading : false
+                is_favorite : true
             })
         }
         fetch(`/reads/${readsId}`, configObj)
@@ -19,7 +18,7 @@ function FinishReadingButton({readsId, userLibrary, setUserLibrary, handleCloseE
         .then(()=>{
             setUserLibrary(userLibrary.map(book => {
                 if(book.reads[0].id === readsId){
-                    const updatedReads = {...book.reads[0], has_been_read : true, currently_reading : false}
+                    const updatedReads = {...book.reads[0], is_favorite : true}
                     const updatedBookOjbect = {
                         ...book, reads : [updatedReads]
                     }
@@ -29,15 +28,11 @@ function FinishReadingButton({readsId, userLibrary, setUserLibrary, handleCloseE
                 }
             }
         ))
-        if(handleCloseEditModal !== undefined){
-            console.log(handleCloseEditModal);
-            handleCloseEditModal();
-        }
     })
     }
     return(
-        <Button onClick={handleStartReading}>Mark as Finished</Button>
+        <Button variant="warning" onClick={markAsFavorite}>Favorite</Button>
     )
 }
 
-export default FinishReadingButton;
+export default FavoriteButton;

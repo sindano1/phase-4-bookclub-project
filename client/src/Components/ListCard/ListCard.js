@@ -45,7 +45,7 @@ function ListCard({bookObject, handleRemoveBookFromLibrary, userLibrary, setUser
                     </Col>
                     <Col sm={12} md={9}>
                         <div>
-                            <p style={{fontSize: "20px", fontWeight: "bold"}}>{bookObject.title}</p>
+                            <p style={{fontSize: "20px", fontWeight: "bold"}}>{bookObject.reads[0].is_favorite === true ? <span id="favorite-start-container"><img id="favorite-star" src="https://i.pinimg.com/originals/85/db/23/85db232a0e2f4d7ec93db9bcedeb97d8.png" alt="favorite"/></span> : null} {bookObject.title}</p>
                             <p>By {bookObject.author}</p>
                             <Container>
                                 <Row>
@@ -55,8 +55,6 @@ function ListCard({bookObject, handleRemoveBookFromLibrary, userLibrary, setUser
                                             <FinishReadingButton readsId = {readsId} userLibrary= {userLibrary} setUserLibrary={setUserLibrary} bookObject={bookObject}/>
                                             : <StartReadingButton readsId = {readsId} userLibrary= {userLibrary} setUserLibrary={setUserLibrary} bookObject={bookObject}/>
                                         }
-                                    </Col>
-                                    <Col>
                                     </Col>
                                 </Row>
                             </Container>

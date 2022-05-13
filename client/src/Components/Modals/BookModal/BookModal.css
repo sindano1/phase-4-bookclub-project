@@ -5,3 +5,9 @@
 #border-sep:hover{
     border-right: 4px #8C0000 solid;
 }
+#favorite-star-container{
+    text-align : center;
+}
+#favorite-star{
+    width: 30px;
+}
