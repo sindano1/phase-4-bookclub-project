@@ -66,7 +66,12 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
     
        <Modal className="modal-background" show={showEditModal} onHide={handleCloseEditModal} fullscreen>
        <Modal.Header closeButton>
-           <Modal.Title><strong style={{fontSize: "40px"}}>{bookObject.title}</strong> by {bookObject.author}</Modal.Title>
+           <Modal.Title>
+               <strong style={{fontSize: "40px"}}>
+                    {bookReads.is_favorite === true ? <span id="favorite-start-container"><img id="favorite-star" src="https://i.pinimg.com/originals/85/db/23/85db232a0e2f4d7ec93db9bcedeb97d8.png" alt="favorite"/></span> : null}
+
+                   {bookObject.title}
+               </strong> by {bookObject.author}</Modal.Title>
        </Modal.Header>
        <Modal.Body>
            <Container className="book-modal-container">
@@ -90,9 +95,7 @@ function BookModal({showEditModal, handleCloseEditModal, bookObject, bookStatus,
                                {/* Add the rating here */}
                                {ratingBox()}
                                <p style={{textAlign: "center", marginBottom: "0", marginTop: "20px"}}>Status:</p>
-                               <p style={{fontStyle:"italic", textAlign: "center"}}><strong>{bookStatus(bookObject)}</strong></p>
-                               {bookReads.is_favorite === true ? <img src={require("../../Images/ar.png")} alt="favorite"/> : <p>NOT FAVORITE</p>}
-                               
+                               <p style={{fontStyle:"italic", textAlign: "center"}}><strong>{bookStatus(bookObject)}</strong></p>                               
                            </Col>
                            
                            <Col lg={9}>
