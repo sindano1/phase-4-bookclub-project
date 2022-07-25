@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { UserContext } from "../UserContext/UserContext";
 import useLoginState from "../../CustomHooks/useLoginState";
+import useRetrieveUserBooks from "../../CustomHooks/useRetrieveUserBooks";
 import "./Home.css"
 import DashboardContainer from "../DashboardContainer/DashboardContainer";
 import Container from "react-bootstrap/Container";
@@ -12,21 +13,18 @@ import NavCard from "../NavCard/NavCard";
 function Home() {
 
     useLoginState();
+    useRetrieveUserBooks();
+   
 
-    const { user } = useContext(UserContext);
+    const { user, userLibrary } = useContext(UserContext);
+    console.log(userLibrary);
     // const navigate = useNavigate();
     //Dashboard Content
     const dashHeader = <h1>Welcome {user.username}!</h1>
     const dashBody = (<Container>
                         <Row>
-                            <Col sm={6} md={4}>
-                                Books Read
-                            </Col>
-                            <Col sm={6} md={4}>
-                                Authors Read
-                            </Col>
-                            <Col sm={6} md={4}>
-                                Book Clubs
+                            <Col>
+                                <p style={{fontSize:"30px"}}>You have read <strong style={{fontSize: "40px"}}>{userLibrary.length !== 0 ? userLibrary.length : "Loading..."}</strong> books so far!</p>
                             </Col>
                         </Row>
                        </Container>)
@@ -38,11 +36,13 @@ function Home() {
     const readingListBody = (<p>See your current and past books and reviews. Add new books. W</p>)
     const readingListButton = "Go to Your Library"
     const readingListLink = "mylibrary"
+    const readingListColor = "#F48B29"
     //Book Clubs
     const bookClubHeader = (<h1>Book Clubs</h1>)
     const bookClubBody = (<p>View, find and join book clubs.</p>)
     const bookClubButton = "My Book Clubs"
     const bookClubLink = "book-clubs"
+    const bookClubColor = "#16697A"
 
     
     return(
@@ -57,6 +57,8 @@ function Home() {
                              body={readingListBody}
                              navButton={readingListButton}
                              navLink={readingListLink}
+                             backgroundColor = {readingListColor}
+                             color="white"
                              />
                 </Col>
                 <Col sm={12} md={6}>
@@ -66,6 +68,8 @@ function Home() {
                              body={bookClubBody}
                              navButton={bookClubButton}
                              navLink={bookClubLink}
+                             backgroundColor={bookClubColor}
+                             color="white"
                              />
                 </Col>
             </Row>
